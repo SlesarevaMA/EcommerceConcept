@@ -56,15 +56,23 @@
 		5CBF9ACC28B1424900BBBA24 /* EcommerceConcept */ = {
 			isa = PBXGroup;
 			children = (
-				5CBF9ACD28B1424900BBBA24 /* AppDelegate.swift */,
-				5CBF9ACF28B1424900BBBA24 /* SceneDelegate.swift */,
 				5CBF9AD128B1424900BBBA24 /* ViewController.swift */,
 				5CBF9AD328B1424900BBBA24 /* Main.storyboard */,
+				5CBF9AE128B1428D00BBBA24 /* Helpers */,
+			);
+			path = EcommerceConcept;
+			sourceTree = "<group>";
+		};
+		5CBF9AE128B1428D00BBBA24 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				5CBF9ACD28B1424900BBBA24 /* AppDelegate.swift */,
+				5CBF9ACF28B1424900BBBA24 /* SceneDelegate.swift */,
 				5CBF9AD628B1424C00BBBA24 /* Assets.xcassets */,
 				5CBF9AD828B1424C00BBBA24 /* LaunchScreen.storyboard */,
 				5CBF9ADB28B1424C00BBBA24 /* Info.plist */,
 			);
-			path = EcommerceConcept;
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -291,10 +299,11 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7TFRW3KMV7;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = EcommerceConcept/Info.plist;
+				INFOPLIST_FILE = EcommerceConcept/Helpers/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -319,10 +328,11 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7TFRW3KMV7;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = EcommerceConcept/Info.plist;
+				INFOPLIST_FILE = EcommerceConcept/Helpers/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
