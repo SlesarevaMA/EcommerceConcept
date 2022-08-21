@@ -9,8 +9,7 @@
 /* Begin PBXBuildFile section */
 		5CBF9ACE28B1424900BBBA24 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBF9ACD28B1424900BBBA24 /* AppDelegate.swift */; };
 		5CBF9AD028B1424900BBBA24 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBF9ACF28B1424900BBBA24 /* SceneDelegate.swift */; };
-		5CBF9AD228B1424900BBBA24 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBF9AD128B1424900BBBA24 /* ViewController.swift */; };
-		5CBF9AD528B1424900BBBA24 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CBF9AD328B1424900BBBA24 /* Main.storyboard */; };
+		5CBF9AD228B1424900BBBA24 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBF9AD128B1424900BBBA24 /* Main.swift */; };
 		5CBF9AD728B1424C00BBBA24 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CBF9AD628B1424C00BBBA24 /* Assets.xcassets */; };
 		5CBF9ADA28B1424C00BBBA24 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CBF9AD828B1424C00BBBA24 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -19,8 +18,7 @@
 		5CBF9ACA28B1424900BBBA24 /* EcommerceConcept.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EcommerceConcept.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CBF9ACD28B1424900BBBA24 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5CBF9ACF28B1424900BBBA24 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		5CBF9AD128B1424900BBBA24 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		5CBF9AD428B1424900BBBA24 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		5CBF9AD128B1424900BBBA24 /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
 		5CBF9AD628B1424C00BBBA24 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5CBF9AD928B1424C00BBBA24 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5CBF9ADB28B1424C00BBBA24 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -56,8 +54,8 @@
 		5CBF9ACC28B1424900BBBA24 /* EcommerceConcept */ = {
 			isa = PBXGroup;
 			children = (
-				5CBF9AD128B1424900BBBA24 /* ViewController.swift */,
-				5CBF9AD328B1424900BBBA24 /* Main.storyboard */,
+				5CDA604028B2594800884E5A /* Main */,
+				5CBF9AD128B1424900BBBA24 /* Main.swift */,
 				5CBF9AE128B1428D00BBBA24 /* Helpers */,
 			);
 			path = EcommerceConcept;
@@ -73,6 +71,13 @@
 				5CBF9ADB28B1424C00BBBA24 /* Info.plist */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		5CDA604028B2594800884E5A /* Main */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -135,7 +140,6 @@
 			files = (
 				5CBF9ADA28B1424C00BBBA24 /* LaunchScreen.storyboard in Resources */,
 				5CBF9AD728B1424C00BBBA24 /* Assets.xcassets in Resources */,
-				5CBF9AD528B1424900BBBA24 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,7 +150,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5CBF9AD228B1424900BBBA24 /* ViewController.swift in Sources */,
+				5CBF9AD228B1424900BBBA24 /* Main.swift in Sources */,
 				5CBF9ACE28B1424900BBBA24 /* AppDelegate.swift in Sources */,
 				5CBF9AD028B1424900BBBA24 /* SceneDelegate.swift in Sources */,
 			);
@@ -155,14 +159,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		5CBF9AD328B1424900BBBA24 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5CBF9AD428B1424900BBBA24 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		5CBF9AD828B1424C00BBBA24 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -302,7 +298,6 @@
 				INFOPLIST_FILE = EcommerceConcept/Helpers/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -331,7 +326,6 @@
 				INFOPLIST_FILE = EcommerceConcept/Helpers/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
