@@ -10,6 +10,11 @@
 		5C836AEB28B2BF5600C7B7F1 /* HotSalesViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C836AEA28B2BF5600C7B7F1 /* HotSalesViewCell.swift */; };
 		5C836AEE28B2C05B00C7B7F1 /* HotSalesCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C836AED28B2C05B00C7B7F1 /* HotSalesCellViewModel.swift */; };
 		5C836AF128B2E0C000C7B7F1 /* UIColor+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C836AF028B2E0C000C7B7F1 /* UIColor+extension.swift */; };
+		5C9140FE28B3B46200FB9240 /* HotSalesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9140FD28B3B46200FB9240 /* HotSalesService.swift */; };
+		5C91410028B3BA3100FB9240 /* NetworkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9140FF28B3BA3100FB9240 /* NetworkRequest.swift */; };
+		5C91410628B3C21B00FB9240 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C91410528B3C21B00FB9240 /* NetworkManager.swift */; };
+		5C91410928B3CA0E00FB9240 /* Decoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C91410828B3CA0E00FB9240 /* Decoder.swift */; };
+		5C91410C28B3CAF000FB9240 /* HotSales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C91410B28B3CAF000FB9240 /* HotSales.swift */; };
 		5CBF9ACE28B1424900BBBA24 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBF9ACD28B1424900BBBA24 /* AppDelegate.swift */; };
 		5CBF9AD028B1424900BBBA24 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBF9ACF28B1424900BBBA24 /* SceneDelegate.swift */; };
 		5CBF9AD228B1424900BBBA24 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBF9AD128B1424900BBBA24 /* Main.swift */; };
@@ -21,6 +26,11 @@
 		5C836AEA28B2BF5600C7B7F1 /* HotSalesViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotSalesViewCell.swift; sourceTree = "<group>"; };
 		5C836AED28B2C05B00C7B7F1 /* HotSalesCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotSalesCellViewModel.swift; sourceTree = "<group>"; };
 		5C836AF028B2E0C000C7B7F1 /* UIColor+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+extension.swift"; sourceTree = "<group>"; };
+		5C9140FD28B3B46200FB9240 /* HotSalesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotSalesService.swift; sourceTree = "<group>"; };
+		5C9140FF28B3BA3100FB9240 /* NetworkRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequest.swift; sourceTree = "<group>"; };
+		5C91410528B3C21B00FB9240 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		5C91410828B3CA0E00FB9240 /* Decoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decoder.swift; sourceTree = "<group>"; };
+		5C91410B28B3CAF000FB9240 /* HotSales.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotSales.swift; sourceTree = "<group>"; };
 		5CBF9ACA28B1424900BBBA24 /* EcommerceConcept.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EcommerceConcept.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CBF9ACD28B1424900BBBA24 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5CBF9ACF28B1424900BBBA24 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -58,6 +68,47 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		5C91410328B3C14100FB9240 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				5C9140FF28B3BA3100FB9240 /* NetworkRequest.swift */,
+				5C91410528B3C21B00FB9240 /* NetworkManager.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		5C91410428B3C1A300FB9240 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				5C9140FD28B3B46200FB9240 /* HotSalesService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		5C91410728B3C9EA00FB9240 /* Decoding */ = {
+			isa = PBXGroup;
+			children = (
+				5C91410828B3CA0E00FB9240 /* Decoder.swift */,
+			);
+			path = Decoding;
+			sourceTree = "<group>";
+		};
+		5C91410A28B3CA8D00FB9240 /* ApiModel */ = {
+			isa = PBXGroup;
+			children = (
+				5C91410B28B3CAF000FB9240 /* HotSales.swift */,
+			);
+			path = ApiModel;
+			sourceTree = "<group>";
+		};
+		5C91410D28B3D4FA00FB9240 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				5CDA604028B2594800884E5A /* Main */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
 		5CBF9AC128B1424900BBBA24 = {
 			isa = PBXGroup;
 			children = (
@@ -77,7 +128,11 @@
 		5CBF9ACC28B1424900BBBA24 /* EcommerceConcept */ = {
 			isa = PBXGroup;
 			children = (
-				5CDA604028B2594800884E5A /* Main */,
+				5C91410D28B3D4FA00FB9240 /* Presentation */,
+				5C91410A28B3CA8D00FB9240 /* ApiModel */,
+				5C91410728B3C9EA00FB9240 /* Decoding */,
+				5C91410428B3C1A300FB9240 /* Service */,
+				5C91410328B3C14100FB9240 /* Network */,
 				5CBF9AE128B1428D00BBBA24 /* Supporting Files */,
 				5C836AEF28B2E08900C7B7F1 /* Helpers */,
 			);
@@ -175,11 +230,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C91410628B3C21B00FB9240 /* NetworkManager.swift in Sources */,
 				5C836AEE28B2C05B00C7B7F1 /* HotSalesCellViewModel.swift in Sources */,
+				5C91410C28B3CAF000FB9240 /* HotSales.swift in Sources */,
+				5C9140FE28B3B46200FB9240 /* HotSalesService.swift in Sources */,
+				5C91410028B3BA3100FB9240 /* NetworkRequest.swift in Sources */,
 				5CBF9AD228B1424900BBBA24 /* Main.swift in Sources */,
 				5CBF9ACE28B1424900BBBA24 /* AppDelegate.swift in Sources */,
 				5C836AF128B2E0C000C7B7F1 /* UIColor+extension.swift in Sources */,
 				5CBF9AD028B1424900BBBA24 /* SceneDelegate.swift in Sources */,
+				5C91410928B3CA0E00FB9240 /* Decoder.swift in Sources */,
 				5C836AEB28B2BF5600C7B7F1 /* HotSalesViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
