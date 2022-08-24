@@ -13,13 +13,13 @@ protocol HotSalesService {
 
 final class HotSalesServiceImpl: HotSalesService {
    
-    private let networkManager: NetworkManager
-    private let decoder: JSONDecoder
+    private let networkManager = NetworkManagerImpl()
+    private let decoder = HotSalesJSONDecoder()
     
-    init(networkManager: NetworkManager, decoder: JSONDecoder) {
-        self.networkManager = networkManager
-        self.decoder = decoder
-    }
+//    init(networkManager: NetworkManager, decoder: JSONDecoder) {
+//        self.networkManager = networkManager
+//        self.decoder = decoder
+//    }
     
     func requestInfo(completion: @escaping (Result<[HotSales], Error>) -> Void) {
         let dataRequest = HomeStoreRequest()

@@ -14,17 +14,16 @@ final class MainViewController: UIViewController {
     
     private var hotSalesCells = [HotSalesCellViewModel]()
     private var hotSalesModels = [HotSales]()
-    private let hotSalesService: HotSalesService
+    private let hotSalesService = HotSalesServiceImpl()
     
-    init(hotSalesService: HotSalesService) {
-        self.hotSalesService = hotSalesService
-
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+//    init(hotSalesService: HotSalesService) {
+//        self.hotSalesService = hotSalesService
+//        super.init(nibName: nil, bundle: nil)
+//    }
+//
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

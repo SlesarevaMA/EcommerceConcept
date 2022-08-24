@@ -23,6 +23,10 @@ private enum Metrics {
     static let topBrandSpacing: CGFloat = 18
     static let topDescriptionSpacing: CGFloat = 5
     static let topBuySpacing: CGFloat = 26
+    static let trailingNewSpacing: CGFloat = 88
+    static let trailingBrandSpacing: CGFloat = 6
+    static let trailingDescriptionSpacing: CGFloat = 24
+    static let trailingBuySpacing: CGFloat = 17
 }
 
 final class HotSalesViewCell: UICollectionViewCell, Identifiable {
@@ -49,6 +53,10 @@ final class HotSalesViewCell: UICollectionViewCell, Identifiable {
                 equalTo: contentView.leadingAnchor,
                 constant: Metrics.leadingSpacing
             ),
+            newLabel.trailingAnchor.constraint(
+                greaterThanOrEqualTo: contentView.trailingAnchor
+//                constant: Metrics.trailingNewSpacing
+            ),
             
             brandLabel.topAnchor.constraint(
                 equalTo: newLabel.bottomAnchor,
@@ -57,6 +65,10 @@ final class HotSalesViewCell: UICollectionViewCell, Identifiable {
             brandLabel.leadingAnchor.constraint(
                 equalTo: contentView.leadingAnchor,
                 constant: Metrics.leadingSpacing
+            ),
+            brandLabel.trailingAnchor.constraint(
+                greaterThanOrEqualTo: contentView.trailingAnchor
+//                constant: Metrics.trailingBrandSpacing
             ),
             
             descriptionLabel.topAnchor.constraint(
@@ -67,6 +79,10 @@ final class HotSalesViewCell: UICollectionViewCell, Identifiable {
                 equalTo: contentView.leadingAnchor,
                 constant: Metrics.leadingSpacing
             ),
+            descriptionLabel.trailingAnchor.constraint(
+                greaterThanOrEqualTo: contentView.trailingAnchor
+//                constant: Metrics.trailingDescriptionSpacing
+            ),
             
             buyButton.topAnchor.constraint(
                 equalTo: descriptionLabel.bottomAnchor,
@@ -75,6 +91,10 @@ final class HotSalesViewCell: UICollectionViewCell, Identifiable {
             buyButton.leadingAnchor.constraint(
                 equalTo: contentView.leadingAnchor,
                 constant: Metrics.leadingSpacing
+            ),
+            buyButton.trailingAnchor.constraint(
+                greaterThanOrEqualTo: contentView.trailingAnchor
+//                constant: Metrics.trailingBuySpacing
             ),
         ])
     }
