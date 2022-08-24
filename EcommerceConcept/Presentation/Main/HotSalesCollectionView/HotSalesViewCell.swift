@@ -7,19 +7,26 @@
 
 import UIKit
 
+protocol Identifiable {
+    static var reuseIdentifier: String { get }
+}
+
+extension Identifiable {
+    static var reuseIdentifier: String {
+        return String(describing: Self.self)
+    }
+}
+
 private enum Metrics {
     static let topNewSpacing: CGFloat = 14
-    static let leftHorizontalSpacing: CGFloat = 25
+    static let leadingSpacing: CGFloat = 25
     static let topBrandSpacing: CGFloat = 18
     static let topDescriptionSpacing: CGFloat = 5
     static let topBuySpacing: CGFloat = 26
-
 }
 
-final class HotSalesViewCell: UICollectionViewCell {
-    
-    static let reuseIdentifier = "HotSalesViewCell"
-    
+final class HotSalesViewCell: UICollectionViewCell, Identifiable {
+        
     private let newLabel = UILabel()
     private let brandLabel = UILabel()
     private let descriptionLabel = UILabel()
@@ -40,7 +47,7 @@ final class HotSalesViewCell: UICollectionViewCell {
             ),
             newLabel.leadingAnchor.constraint(
                 equalTo: contentView.leadingAnchor,
-                constant: Metrics.leftHorizontalSpacing
+                constant: Metrics.leadingSpacing
             ),
             
             brandLabel.topAnchor.constraint(
@@ -49,7 +56,7 @@ final class HotSalesViewCell: UICollectionViewCell {
             ),
             brandLabel.leadingAnchor.constraint(
                 equalTo: contentView.leadingAnchor,
-                constant: Metrics.leftHorizontalSpacing
+                constant: Metrics.leadingSpacing
             ),
             
             descriptionLabel.topAnchor.constraint(
@@ -58,7 +65,7 @@ final class HotSalesViewCell: UICollectionViewCell {
             ),
             descriptionLabel.leadingAnchor.constraint(
                 equalTo: contentView.leadingAnchor,
-                constant: Metrics.leftHorizontalSpacing
+                constant: Metrics.leadingSpacing
             ),
             
             buyButton.topAnchor.constraint(
@@ -67,7 +74,7 @@ final class HotSalesViewCell: UICollectionViewCell {
             ),
             buyButton.leadingAnchor.constraint(
                 equalTo: contentView.leadingAnchor,
-                constant: Metrics.leftHorizontalSpacing
+                constant: Metrics.leadingSpacing
             ),
         ])
     }
@@ -76,7 +83,7 @@ final class HotSalesViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureCell(with model: HotSalesCellViewModel) {
+    func configure(with model: HotSalesCellViewModel) {
         newLabel.isHidden = model.new
         brandLabel.text = model.brand
         descriptionLabel.text = model.description

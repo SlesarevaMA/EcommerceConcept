@@ -22,7 +22,7 @@ final class HotSalesServiceImpl: HotSalesService {
     }
     
     func requestInfo(completion: @escaping (Result<[HotSales], Error>) -> Void) {
-        let dataRequest = NetworkRequest()
+        let dataRequest = HomeStoreRequest()
         
         networkManager.sendRequest(request: dataRequest) { result in
             switch result {
