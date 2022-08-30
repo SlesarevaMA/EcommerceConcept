@@ -23,9 +23,6 @@ private enum Metrics {
     static let topBrandSpacing: CGFloat = 18
     static let topDescriptionSpacing: CGFloat = 5
     static let topBuySpacing: CGFloat = 26
-    static let trailingNewSpacing: CGFloat = 88
-    static let trailingBrandSpacing: CGFloat = 6
-    static let trailingDescriptionSpacing: CGFloat = 24
     static let trailingBuySpacing: CGFloat = 17
 }
 
@@ -35,16 +32,47 @@ final class HotSalesViewCell: UICollectionViewCell, Identifiable {
     private let brandLabel = UILabel()
     private let descriptionLabel = UILabel()
     private let buyButton = UIButton()
+    private let imageView = UIImageView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        [newLabel, brandLabel, descriptionLabel, buyButton].forEach {
+        configure()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        newLabel.layoutIfNeeded()
+        newLabel.layer.cornerRadius = newLabel.frame.height / 2
+    }
+
+    func configure(with model: HotSalesCellViewModel) {
+        newLabel.isHidden = model.isNewLabelVisible
+        brandLabel.text = model.brand
+        descriptionLabel.text = model.description
+        imageView.image = model.image
+    }
+    
+    private func configure() {
+        addConstrains()
+        configureSubviews()
+    }
+
+    private func addConstrains() {
+        [newLabel, brandLabel, descriptionLabel, buyButton, imageView].forEach {
             contentView.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
         NSLayoutConstraint.activate([
+            newLabel.widthAnchor.constraint(
+                equalTo: newLabel.heightAnchor
+            ),
             newLabel.topAnchor.constraint(
                 equalTo: contentView.topAnchor,
                 constant: Metrics.topNewSpacing
@@ -54,8 +82,10 @@ final class HotSalesViewCell: UICollectionViewCell, Identifiable {
                 constant: Metrics.leadingSpacing
             ),
             newLabel.trailingAnchor.constraint(
-                greaterThanOrEqualTo: contentView.trailingAnchor
-//                constant: Metrics.trailingNewSpacing
+                lessThanOrEqualTo: contentView.trailingAnchor
+            ),
+            newLabel.widthAnchor.constraint(
+                equalToConstant: 27
             ),
             
             brandLabel.topAnchor.constraint(
@@ -67,8 +97,7 @@ final class HotSalesViewCell: UICollectionViewCell, Identifiable {
                 constant: Metrics.leadingSpacing
             ),
             brandLabel.trailingAnchor.constraint(
-                greaterThanOrEqualTo: contentView.trailingAnchor
-//                constant: Metrics.trailingBrandSpacing
+                lessThanOrEqualTo: contentView.trailingAnchor
             ),
             
             descriptionLabel.topAnchor.constraint(
@@ -80,8 +109,7 @@ final class HotSalesViewCell: UICollectionViewCell, Identifiable {
                 constant: Metrics.leadingSpacing
             ),
             descriptionLabel.trailingAnchor.constraint(
-                greaterThanOrEqualTo: contentView.trailingAnchor
-//                constant: Metrics.trailingDescriptionSpacing
+                lessThanOrEqualTo: contentView.trailingAnchor
             ),
             
             buyButton.topAnchor.constraint(
@@ -93,28 +121,34 @@ final class HotSalesViewCell: UICollectionViewCell, Identifiable {
                 constant: Metrics.leadingSpacing
             ),
             buyButton.trailingAnchor.constraint(
-                greaterThanOrEqualTo: contentView.trailingAnchor
-//                constant: Metrics.trailingBuySpacing
+                lessThanOrEqualTo: contentView.trailingAnchor
             ),
+            
+            imageView.topAnchor.constraint(
+                equalTo: contentView.topAnchor
+            ),
+            imageView.leadingAnchor.constraint(
+                equalTo: buyButton.trailingAnchor,
+                constant: Metrics.trailingBuySpacing
+            ),
+            imageView.trailingAnchor.constraint(
+                equalTo: contentView.trailingAnchor
+            ),
+            imageView.bottomAnchor.constraint(
+                equalTo: contentView.bottomAnchor
+            )
         ])
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func configure(with model: HotSalesCellViewModel) {
-        newLabel.isHidden = model.new
-        brandLabel.text = model.brand
-        descriptionLabel.text = model.description
-    }
-
-    private func configure() {
+    private func configureSubviews() {
+        self.backgroundColor = .black
+        
         newLabel.text = "New"
         newLabel.textColor = .white
         newLabel.font = .systemFont(ofSize: 10)
         newLabel.backgroundColor = UIColor(hex: 0xFF6E4E)
-        newLabel.layer.cornerRadius = newLabel.frame.width / 2
+        newLabel.layer.masksToBounds = true
+        newLabel.textAlignment = .center
         
         brandLabel.textColor = .white
         brandLabel.font = .systemFont(ofSize: 25)
@@ -122,9 +156,16 @@ final class HotSalesViewCell: UICollectionViewCell, Identifiable {
         descriptionLabel.textColor = .white
         descriptionLabel.font = .systemFont(ofSize: 25)
         
-        buyButton.titleLabel?.text = "Buy now!"
-        buyButton.titleLabel?.font = .systemFont(ofSize: 11)
+        buyButton.setTitleColor(.black, for: .normal)
+        buyButton.setTitle("Buy now!", for: .normal)
+        buyButton.titleLabel?.font = .boldSystemFont(ofSize: 11)
         buyButton.backgroundColor = .white
-        buyButton.layer.cornerRadius = 20
+        buyButton.layer.cornerRadius = 5
+        buyButton.contentEdgeInsets = UIEdgeInsets(
+            top: 5,
+            left: 20,
+            bottom: 5,
+            right: 20
+        )
     }
 }
