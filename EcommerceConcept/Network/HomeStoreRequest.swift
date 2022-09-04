@@ -10,7 +10,7 @@ import Foundation
 struct HomeStoreRequest {
     
     var urlRequest: URLRequest {
-        guard let url = URL(string: "https://run.mocky.io/v3/654bd15e-b121-49ba-a588-960956b15175")
+        guard let url = URL(string: "https://run.mocky.io/v3/2253baf9-fe22-47aa-b3f7-3de47f64a5c2")
         else {
             fatalError("Unable to create url")
         }

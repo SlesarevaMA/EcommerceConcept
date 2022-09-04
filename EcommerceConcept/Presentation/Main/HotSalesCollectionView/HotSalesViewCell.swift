@@ -70,19 +70,11 @@ final class HotSalesViewCell: UICollectionViewCell, Identifiable {
         }
         
         NSLayoutConstraint.activate([
-            newLabel.widthAnchor.constraint(
-                equalTo: newLabel.heightAnchor
-            ),
-            newLabel.topAnchor.constraint(
-                equalTo: contentView.topAnchor,
-                constant: Metrics.topNewSpacing
-            ),
+            newLabel.widthAnchor.constraint(equalTo: newLabel.heightAnchor),
+            newLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Metrics.topNewSpacing),
             newLabel.leadingAnchor.constraint(
                 equalTo: contentView.leadingAnchor,
                 constant: Metrics.leadingSpacing
-            ),
-            newLabel.trailingAnchor.constraint(
-                lessThanOrEqualTo: contentView.trailingAnchor
             ),
             newLabel.widthAnchor.constraint(
                 equalToConstant: 27

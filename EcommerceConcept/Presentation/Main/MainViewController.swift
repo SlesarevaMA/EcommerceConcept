@@ -30,20 +30,17 @@ final class MainViewController: UIViewController {
     private var hotSalesModels = [HotSales]()
     private let hotSalesService = HotSalesServiceImpl()
     
-//    init(hotSalesService: HotSalesService) {
-//        self.hotSalesService = hotSalesService
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         addSubviews()
         prepareCollectionView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        requestItems()
     }
     
     private func addSubviews() {
@@ -89,7 +86,7 @@ final class MainViewController: UIViewController {
                 case .success(let results):
                     self.hotSalesModels = results
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    print(error)
                 }
             }
         }
