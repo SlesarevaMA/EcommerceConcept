@@ -15,19 +15,19 @@ final class MainViewController: UIViewController {
         collectionViewLayout: collectionViewLayout
     )
     
-    private let hotSalesCells = [
-        HotSalesCellViewModel(image: nil,
-                              isNewLabelVisible: true,
-                              brand: "nokia",
-                              description: "gg"),
-        HotSalesCellViewModel(image: nil,
-                              isNewLabelVisible: false,
-                              brand: "iphone",
-                              description: "kk"),
-    ]
+//    private let hotSalesCells = [
+//        HotSalesCellViewModel(image: nil,
+//                              isNewLabelVisible: true,
+//                              brand: "nokia",
+//                              description: "gg"),
+//        HotSalesCellViewModel(image: nil,
+//                              isNewLabelVisible: false,
+//                              brand: "iphone",
+//                              description: "kk"),
+//    ]
+//    
+    private var hotSalesCells = [HotSalesCellViewModel]()
 
-//    private var hotSalesCells = [HotSalesCellViewModel]()
-    private var hotSalesModels = [HotSales]()
     private let hotSalesService = HotSalesServiceImpl()
     
     override func viewDidLoad() {
@@ -51,8 +51,7 @@ final class MainViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(
-                equalTo: view.topAnchor,
-                constant: 40
+                equalTo: view.topAnchor
             ),
             collectionView.bottomAnchor.constraint(
                 equalTo: view.bottomAnchor
@@ -67,10 +66,7 @@ final class MainViewController: UIViewController {
     }
     
     private func prepareCollectionView() {
-        collectionViewLayout.itemSize = CGSize(
-            width: view.frame.width,
-            height: view.frame.height / 4
-        )
+        collectionViewLayout.itemSize = CGSize(width: view.frame.width, height: 182)
         collectionViewLayout.minimumInteritemSpacing = 12
         collectionViewLayout.scrollDirection = .horizontal
         collectionView.dataSource = self
@@ -84,7 +80,19 @@ final class MainViewController: UIViewController {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let results):
-                    self.hotSalesModels = results
+                    
+                    for model in results {
+                        self.hotSalesCells.append(
+                            HotSalesCellViewModel(
+                                image: nil,
+                                isNewLabelVisible: model.isNew,
+                                brand: model.title,
+                                description: model.subtitle
+                            )
+                        )
+                    }
+                    
+                    self.collectionView.reloadData()
                 case .failure(let error):
                     print(error)
                 }

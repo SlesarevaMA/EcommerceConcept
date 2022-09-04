@@ -23,8 +23,8 @@ final class HotSalesServiceImpl: HotSalesService {
             switch result {
             case .success(let data):
                 do {
-                    let hotSales = try self.decoder.decode([HotSales].self, from: data)
-                    completion(.success(hotSales))
+                    let hotSalesResponse = try self.decoder.decode(HotSalesResponse.self, from: data)
+                    completion(.success(hotSalesResponse.homeStore))
                 } catch let error {
                     completion(.failure(error))
                 }
