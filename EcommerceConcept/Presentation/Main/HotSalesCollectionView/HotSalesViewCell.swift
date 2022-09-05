@@ -22,10 +22,10 @@ private enum Metrics {
     }
     
     enum Font {
-        static let newLabel = UIFont.systemFont(ofSize: 10)
-        static let brandLabel = UIFont.systemFont(ofSize: 25)
-        static let descriptionLabel = UIFont.systemFont(ofSize: 25)
-        static let buyButton = UIFont.boldSystemFont(ofSize: 11)
+        static let newLabel: UIFont = .systemFont(ofSize: 10)
+        static let brandLabel: UIFont = .systemFont(ofSize: 25)
+        static let descriptionLabel: UIFont = .systemFont(ofSize: 25)
+        static let buyButton: UIFont = .boldSystemFont(ofSize: 11)
     }
     
     enum Text {
@@ -34,18 +34,18 @@ private enum Metrics {
     }
     
     enum Color {
-        static let background = UIColor.black
-        static let newLabelText = UIColor.white
-        static let newLabelBackground = UIColor(hex: 0xFF6E4E)
-        static let brandLabelText = UIColor.white
-        static let descriptionLabelText = UIColor.white
-        static let buyButtonText = UIColor.black
-        static let buyButtonBackground = UIColor.white
+        static let background: UIColor = .black
+        static let newLabelText: UIColor = .white
+        static let newLabelBackground: UIColor = .init(hex: 0xFF6E4E)
+        static let brandLabelText: UIColor = .white
+        static let descriptionLabelText: UIColor = .white
+        static let buyButtonText: UIColor = .black
+        static let buyButtonBackground: UIColor = .white
     }
     
     enum Dimension {
         static let buyButtonCornerRadius: CGFloat = 5
-        static let buyButtonContentEdgeInsets = UIEdgeInsets(top: 5, left: 20, bottom: 5, right: 20)
+        static let buyButtonContentEdgeInsets: UIEdgeInsets = .init(top: 5, left: 20, bottom: 5, right: 20)
     }
 }
 
@@ -70,6 +70,7 @@ final class HotSalesViewCell: UICollectionViewCell, Identifiable {
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        // Set frame for newLabel
         newLabel.layoutIfNeeded()
         newLabel.layer.cornerRadius = newLabel.frame.height / 2
     }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-private enum MetricsMainViewController {
+private enum Metrics {
     static let collectionViewHeight: CGFloat = 182
     static let collectionViewInteritemSpacing: CGFloat = 12
 }
@@ -51,9 +51,9 @@ final class MainViewController: UIViewController {
     private func prepareCollectionView() {
         collectionViewLayout.itemSize = CGSize(
             width: view.frame.width,
-            height: MetricsMainViewController.collectionViewHeight
+            height: Metrics.collectionViewHeight
         )
-        collectionViewLayout.minimumInteritemSpacing = MetricsMainViewController.collectionViewInteritemSpacing
+        collectionViewLayout.minimumInteritemSpacing = Metrics.collectionViewInteritemSpacing
         collectionViewLayout.scrollDirection = .horizontal
         collectionView.dataSource = self
         collectionView.register(HotSalesViewCell.self, forCellWithReuseIdentifier: HotSalesViewCell.reuseIdentifier)
