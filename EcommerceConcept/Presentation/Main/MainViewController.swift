@@ -7,14 +7,19 @@
 
 import UIKit
 
+private enum MetricsMainViewController {
+    static let collectionViewHeight: CGFloat = 182
+    static let collectionViewInteritemSpacing: CGFloat = 12
+}
+
 final class MainViewController: UIViewController {
     
-    let collectionViewLayout = UICollectionViewFlowLayout()
-    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
+    private let hotSalesService = HotSalesServiceImpl()
+    
+    private let collectionViewLayout = UICollectionViewFlowLayout()
+    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
 
     private var hotSalesCells = [HotSalesCellViewModel]()
-
-    private let hotSalesService = HotSalesServiceImpl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,8 +49,11 @@ final class MainViewController: UIViewController {
     }
     
     private func prepareCollectionView() {
-        collectionViewLayout.itemSize = CGSize(width: view.frame.width, height: 182)
-        collectionViewLayout.minimumInteritemSpacing = 12
+        collectionViewLayout.itemSize = CGSize(
+            width: view.frame.width,
+            height: MetricsMainViewController.collectionViewHeight
+        )
+        collectionViewLayout.minimumInteritemSpacing = MetricsMainViewController.collectionViewInteritemSpacing
         collectionViewLayout.scrollDirection = .horizontal
         collectionView.dataSource = self
         collectionView.register(HotSalesViewCell.self, forCellWithReuseIdentifier: HotSalesViewCell.reuseIdentifier)
@@ -56,24 +64,30 @@ final class MainViewController: UIViewController {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let results):
-                    
-                    for model in results {
-                        self.hotSalesCells.append(
-                            HotSalesCellViewModel(
-                                image: nil,
-                                isNewLabelVisible: model.isNew,
-                                brand: model.title,
-                                description: model.subtitle
-                            )
-                        )
-                    }
-                    
+                    self.hotSalesCells = self.getViewModels(from: results)
                     self.collectionView.reloadData()
                 case .failure(let error):
                     print(error)
                 }
             }
         }
+    }
+    
+    private func getViewModels(from apiModels: [HotSales]) -> [HotSalesCellViewModel] {
+        var hotSalesCells = [HotSalesCellViewModel]()
+                
+        for model in apiModels {
+            let cell = HotSalesCellViewModel(
+                image: nil,
+                isNewLabelVisible: model.isNew,
+                brand: model.title,
+                description: model.subtitle
+            )
+            
+            hotSalesCells.append(cell)
+        }
+        
+        return hotSalesCells
     }
 }
 

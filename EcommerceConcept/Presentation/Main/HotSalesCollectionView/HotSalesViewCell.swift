@@ -21,38 +21,31 @@ private enum Metrics {
         static let newLabelWidth: CGFloat = 27
     }
     
-    enum SubviewsParametrs {
-        enum Font {
-            static let newLabel = UIFont.systemFont(ofSize: 10)
-            static let brandLabel = UIFont.systemFont(ofSize: 25)
-            static let descriptionLabel = UIFont.systemFont(ofSize: 25)
-            static let buyButton = UIFont.boldSystemFont(ofSize: 11)
-        }
-        
-        enum Text {
-            static let newLabel = "New"
-            static let buyButton = "Buy now!"
-        }
-        
-        enum Color {
-            static let background = UIColor.black
-            static let newLabelText = UIColor.white
-            static let newLabelBackground = UIColor(hex: 0xFF6E4E)
-            static let brandLabelText = UIColor.white
-            static let descriptionLabelText = UIColor.white
-            static let buyButtonText = UIColor.black
-            static let buyButtonBackground = UIColor.white
-        }
-        
-        enum Size {
-            static let buyButtonCornerRadius: CGFloat = 5
-            static let buyButtonContentEdgeInsets = UIEdgeInsets(top: 5, left: 20, bottom: 5, right: 20)
-        }
-        
-        enum InstanceProperty {
-            static let newLabelLayerMasksToBounds = true
-            static let newLabelTextAlignment = NSTextAlignment.center
-        }
+    enum Font {
+        static let newLabel = UIFont.systemFont(ofSize: 10)
+        static let brandLabel = UIFont.systemFont(ofSize: 25)
+        static let descriptionLabel = UIFont.systemFont(ofSize: 25)
+        static let buyButton = UIFont.boldSystemFont(ofSize: 11)
+    }
+    
+    enum Text {
+        static let newLabel = "New"
+        static let buyButton = "Buy now!"
+    }
+    
+    enum Color {
+        static let background = UIColor.black
+        static let newLabelText = UIColor.white
+        static let newLabelBackground = UIColor(hex: 0xFF6E4E)
+        static let brandLabelText = UIColor.white
+        static let descriptionLabelText = UIColor.white
+        static let buyButtonText = UIColor.black
+        static let buyButtonBackground = UIColor.white
+    }
+    
+    enum Dimension {
+        static let buyButtonCornerRadius: CGFloat = 5
+        static let buyButtonContentEdgeInsets = UIEdgeInsets(top: 5, left: 20, bottom: 5, right: 20)
     }
 }
 
@@ -82,7 +75,7 @@ final class HotSalesViewCell: UICollectionViewCell, Identifiable {
     }
 
     func configure(with model: HotSalesCellViewModel) {
-        newLabel.isHidden = model.isNewLabelVisible
+        newLabel.isHidden = !(model.isNewLabelVisible)
         brandLabel.text = model.brand
         descriptionLabel.text = model.description
         imageView.image = model.image
@@ -146,26 +139,26 @@ final class HotSalesViewCell: UICollectionViewCell, Identifiable {
     }
     
     private func configureSubviews() {
-        self.backgroundColor = Metrics.SubviewsParametrs.Color.background
+        self.backgroundColor = Metrics.Color.background
         
-        newLabel.text = Metrics.SubviewsParametrs.Text.newLabel
-        newLabel.textColor = Metrics.SubviewsParametrs.Color.newLabelText
-        newLabel.font = Metrics.SubviewsParametrs.Font.newLabel
-        newLabel.backgroundColor = Metrics.SubviewsParametrs.Color.newLabelBackground
-        newLabel.layer.masksToBounds = Metrics.SubviewsParametrs.InstanceProperty.newLabelLayerMasksToBounds
-        newLabel.textAlignment = Metrics.SubviewsParametrs.InstanceProperty.newLabelTextAlignment
+        newLabel.text = Metrics.Text.newLabel
+        newLabel.textColor = Metrics.Color.newLabelText
+        newLabel.font = Metrics.Font.newLabel
+        newLabel.backgroundColor = Metrics.Color.newLabelBackground
+        newLabel.layer.masksToBounds = true
+        newLabel.textAlignment = .center
         
-        brandLabel.textColor = Metrics.SubviewsParametrs.Color.brandLabelText
-        brandLabel.font = Metrics.SubviewsParametrs.Font.brandLabel
+        brandLabel.textColor = Metrics.Color.brandLabelText
+        brandLabel.font = Metrics.Font.brandLabel
         
-        descriptionLabel.textColor = Metrics.SubviewsParametrs.Color.descriptionLabelText
-        descriptionLabel.font = Metrics.SubviewsParametrs.Font.descriptionLabel
+        descriptionLabel.textColor = Metrics.Color.descriptionLabelText
+        descriptionLabel.font = Metrics.Font.descriptionLabel
         
-        buyButton.setTitleColor(Metrics.SubviewsParametrs.Color.buyButtonText, for: .normal)
-        buyButton.setTitle(Metrics.SubviewsParametrs.Text.buyButton, for: .normal)
-        buyButton.titleLabel?.font = Metrics.SubviewsParametrs.Font.buyButton
-        buyButton.backgroundColor = Metrics.SubviewsParametrs.Color.buyButtonBackground
-        buyButton.layer.cornerRadius = Metrics.SubviewsParametrs.Size.buyButtonCornerRadius
-        buyButton.contentEdgeInsets = Metrics.SubviewsParametrs.Size.buyButtonContentEdgeInsets
+        buyButton.setTitleColor(Metrics.Color.buyButtonText, for: .normal)
+        buyButton.setTitle(Metrics.Text.buyButton, for: .normal)
+        buyButton.titleLabel?.font = Metrics.Font.buyButton
+        buyButton.backgroundColor = Metrics.Color.buyButtonBackground
+        buyButton.layer.cornerRadius = Metrics.Dimension.buyButtonCornerRadius
+        buyButton.contentEdgeInsets = Metrics.Dimension.buyButtonContentEdgeInsets
     }
 }

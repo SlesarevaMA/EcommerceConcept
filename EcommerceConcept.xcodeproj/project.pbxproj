@@ -74,7 +74,7 @@
 		5C91410328B3C14100FB9240 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				5C9140FF28B3BA3100FB9240 /* HomeStoreRequest.swift */,
+				ABB3D95828C67F53006014A9 /* Requests */,
 				5C91410528B3C21B00FB9240 /* NetworkManager.swift */,
 			);
 			path = Network;
@@ -161,6 +161,14 @@
 				5C836AEC28B2BF5E00C7B7F1 /* HotSalesCollectionView */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		ABB3D95828C67F53006014A9 /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				5C9140FF28B3BA3100FB9240 /* HomeStoreRequest.swift */,
+			);
+			path = Requests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
