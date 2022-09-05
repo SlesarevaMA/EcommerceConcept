@@ -7,23 +7,53 @@
 
 import UIKit
 
-protocol Identifiable {
-    static var reuseIdentifier: String { get }
-}
-
-extension Identifiable {
-    static var reuseIdentifier: String {
-        return String(describing: Self.self)
-    }
-}
-
 private enum Metrics {
-    static let topNewSpacing: CGFloat = 14
-    static let leadingSpacing: CGFloat = 25
-    static let topBrandSpacing: CGFloat = 18
-    static let topDescriptionSpacing: CGFloat = 5
-    static let topBuySpacing: CGFloat = 26
-    static let trailingBuySpacing: CGFloat = 17
+    enum Spacings {
+        static let topNewSpacing: CGFloat = 14
+        static let leadingSpacing: CGFloat = 25
+        static let topBrandSpacing: CGFloat = 18
+        static let topDescriptionSpacing: CGFloat = 5
+        static let topBuySpacing: CGFloat = 26
+        static let trailingBuySpacing: CGFloat = 17
+    }
+    
+    enum Size {
+        static let newLabelWidth: CGFloat = 27
+    }
+    
+    enum SubviewsParametrs {
+        enum Font {
+            static let newLabel = UIFont.systemFont(ofSize: 10)
+            static let brandLabel = UIFont.systemFont(ofSize: 25)
+            static let descriptionLabel = UIFont.systemFont(ofSize: 25)
+            static let buyButton = UIFont.boldSystemFont(ofSize: 11)
+        }
+        
+        enum Text {
+            static let newLabel = "New"
+            static let buyButton = "Buy now!"
+        }
+        
+        enum Color {
+            static let background = UIColor.black
+            static let newLabelText = UIColor.white
+            static let newLabelBackground = UIColor(hex: 0xFF6E4E)
+            static let brandLabelText = UIColor.white
+            static let descriptionLabelText = UIColor.white
+            static let buyButtonText = UIColor.black
+            static let buyButtonBackground = UIColor.white
+        }
+        
+        enum Size {
+            static let buyButtonCornerRadius: CGFloat = 5
+            static let buyButtonContentEdgeInsets = UIEdgeInsets(top: 5, left: 20, bottom: 5, right: 20)
+        }
+        
+        enum InstanceProperty {
+            static let newLabelLayerMasksToBounds = true
+            static let newLabelTextAlignment = NSTextAlignment.center
+        }
+    }
 }
 
 final class HotSalesViewCell: UICollectionViewCell, Identifiable {
@@ -71,93 +101,71 @@ final class HotSalesViewCell: UICollectionViewCell, Identifiable {
         
         NSLayoutConstraint.activate([
             newLabel.widthAnchor.constraint(equalTo: newLabel.heightAnchor),
-            newLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Metrics.topNewSpacing),
+            newLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Metrics.Spacings.topNewSpacing),
             newLabel.leadingAnchor.constraint(
                 equalTo: contentView.leadingAnchor,
-                constant: Metrics.leadingSpacing
+                constant: Metrics.Spacings.leadingSpacing
             ),
-            newLabel.widthAnchor.constraint(
-                equalToConstant: 27
-            ),
+            newLabel.widthAnchor.constraint(equalToConstant: Metrics.Size.newLabelWidth),
             
-            brandLabel.topAnchor.constraint(
-                equalTo: newLabel.bottomAnchor,
-                constant: Metrics.topBrandSpacing
-            ),
+            brandLabel.topAnchor.constraint(equalTo: newLabel.bottomAnchor, constant: Metrics.Spacings.topBrandSpacing),
             brandLabel.leadingAnchor.constraint(
                 equalTo: contentView.leadingAnchor,
-                constant: Metrics.leadingSpacing
+                constant: Metrics.Spacings.leadingSpacing
             ),
-            brandLabel.trailingAnchor.constraint(
-                lessThanOrEqualTo: contentView.trailingAnchor
-            ),
+            brandLabel.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor),
             
             descriptionLabel.topAnchor.constraint(
                 equalTo: brandLabel.bottomAnchor,
-                constant: Metrics.topDescriptionSpacing
+                constant: Metrics.Spacings.topDescriptionSpacing
             ),
             descriptionLabel.leadingAnchor.constraint(
                 equalTo: contentView.leadingAnchor,
-                constant: Metrics.leadingSpacing
+                constant: Metrics.Spacings.leadingSpacing
             ),
-            descriptionLabel.trailingAnchor.constraint(
-                lessThanOrEqualTo: contentView.trailingAnchor
-            ),
+            descriptionLabel.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor),
             
             buyButton.topAnchor.constraint(
                 equalTo: descriptionLabel.bottomAnchor,
-                constant: Metrics.topBuySpacing
+                constant: Metrics.Spacings.topBuySpacing
             ),
             buyButton.leadingAnchor.constraint(
                 equalTo: contentView.leadingAnchor,
-                constant: Metrics.leadingSpacing
+                constant: Metrics.Spacings.leadingSpacing
             ),
-            buyButton.trailingAnchor.constraint(
-                lessThanOrEqualTo: contentView.trailingAnchor
-            ),
+            buyButton.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor),
             
-            imageView.topAnchor.constraint(
-                equalTo: contentView.topAnchor
-            ),
+            imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageView.leadingAnchor.constraint(
                 equalTo: buyButton.trailingAnchor,
-                constant: Metrics.trailingBuySpacing
+                constant: Metrics.Spacings.trailingBuySpacing
             ),
-            imageView.trailingAnchor.constraint(
-                equalTo: contentView.trailingAnchor
-            ),
-            imageView.bottomAnchor.constraint(
-                equalTo: contentView.bottomAnchor
-            )
+            imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
     
     private func configureSubviews() {
-        self.backgroundColor = .black
+        self.backgroundColor = Metrics.SubviewsParametrs.Color.background
         
-        newLabel.text = "New"
-        newLabel.textColor = .white
-        newLabel.font = .systemFont(ofSize: 10)
-        newLabel.backgroundColor = UIColor(hex: 0xFF6E4E)
-        newLabel.layer.masksToBounds = true
-        newLabel.textAlignment = .center
+        newLabel.text = Metrics.SubviewsParametrs.Text.newLabel
+        newLabel.textColor = Metrics.SubviewsParametrs.Color.newLabelText
+        newLabel.font = Metrics.SubviewsParametrs.Font.newLabel
+        newLabel.backgroundColor = Metrics.SubviewsParametrs.Color.newLabelBackground
+        newLabel.layer.masksToBounds = Metrics.SubviewsParametrs.InstanceProperty.newLabelLayerMasksToBounds
+        newLabel.textAlignment = Metrics.SubviewsParametrs.InstanceProperty.newLabelTextAlignment
         
-        brandLabel.textColor = .white
-        brandLabel.font = .systemFont(ofSize: 25)
+        brandLabel.textColor = Metrics.SubviewsParametrs.Color.brandLabelText
+        brandLabel.font = Metrics.SubviewsParametrs.Font.brandLabel
         
-        descriptionLabel.textColor = .white
-        descriptionLabel.font = .systemFont(ofSize: 25)
+        descriptionLabel.textColor = Metrics.SubviewsParametrs.Color.descriptionLabelText
+        descriptionLabel.font = Metrics.SubviewsParametrs.Font.descriptionLabel
         
-        buyButton.setTitleColor(.black, for: .normal)
-        buyButton.setTitle("Buy now!", for: .normal)
-        buyButton.titleLabel?.font = .boldSystemFont(ofSize: 11)
-        buyButton.backgroundColor = .white
-        buyButton.layer.cornerRadius = 5
-        buyButton.contentEdgeInsets = UIEdgeInsets(
-            top: 5,
-            left: 20,
-            bottom: 5,
-            right: 20
-        )
+        buyButton.setTitleColor(Metrics.SubviewsParametrs.Color.buyButtonText, for: .normal)
+        buyButton.setTitle(Metrics.SubviewsParametrs.Text.buyButton, for: .normal)
+        buyButton.titleLabel?.font = Metrics.SubviewsParametrs.Font.buyButton
+        buyButton.backgroundColor = Metrics.SubviewsParametrs.Color.buyButtonBackground
+        buyButton.layer.cornerRadius = Metrics.SubviewsParametrs.Size.buyButtonCornerRadius
+        buyButton.contentEdgeInsets = Metrics.SubviewsParametrs.Size.buyButtonContentEdgeInsets
     }
 }
