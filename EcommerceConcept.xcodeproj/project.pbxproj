@@ -20,6 +20,7 @@
 		5CBF9AD228B1424900BBBA24 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBF9AD128B1424900BBBA24 /* MainViewController.swift */; };
 		5CBF9AD728B1424C00BBBA24 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CBF9AD628B1424C00BBBA24 /* Assets.xcassets */; };
 		5CBF9ADA28B1424C00BBBA24 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CBF9AD828B1424C00BBBA24 /* LaunchScreen.storyboard */; };
+		AB5B8D9728C77991005AA82B /* SelectCategoryViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5B8D9628C77991005AA82B /* SelectCategoryViewCell.swift */; };
 		ABB3D95728C678C4006014A9 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB3D95628C678C4006014A9 /* Identifiable.swift */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +40,7 @@
 		5CBF9AD628B1424C00BBBA24 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5CBF9AD928B1424C00BBBA24 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5CBF9ADB28B1424C00BBBA24 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AB5B8D9628C77991005AA82B /* SelectCategoryViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCategoryViewCell.swift; sourceTree = "<group>"; };
 		ABB3D95628C678C4006014A9 /* Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -53,13 +55,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5C836AEC28B2BF5E00C7B7F1 /* HotSalesCollectionView */ = {
+		5C836AEC28B2BF5E00C7B7F1 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				AB5B8D9628C77991005AA82B /* SelectCategoryViewCell.swift */,
 				5C836AEA28B2BF5600C7B7F1 /* HotSalesViewCell.swift */,
-				5C836AED28B2C05B00C7B7F1 /* HotSalesCellViewModel.swift */,
 			);
-			path = HotSalesCollectionView;
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		5C836AEF28B2E08900C7B7F1 /* Helpers */ = {
@@ -107,6 +109,7 @@
 		5C91410D28B3D4FA00FB9240 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				5C836AEF28B2E08900C7B7F1 /* Helpers */,
 				5CDA604028B2594800884E5A /* Main */,
 			);
 			path = Presentation;
@@ -132,12 +135,9 @@
 			isa = PBXGroup;
 			children = (
 				5C91410D28B3D4FA00FB9240 /* Presentation */,
-				5C91410A28B3CA8D00FB9240 /* ApiModel */,
-				5C91410728B3C9EA00FB9240 /* Decoding */,
 				5C91410428B3C1A300FB9240 /* Service */,
-				5C91410328B3C14100FB9240 /* Network */,
+				AB62EEDA28C790DE009EB555 /* Core */,
 				5CBF9AE128B1428D00BBBA24 /* Supporting Files */,
-				5C836AEF28B2E08900C7B7F1 /* Helpers */,
 			);
 			path = EcommerceConcept;
 			sourceTree = "<group>";
@@ -158,9 +158,28 @@
 			isa = PBXGroup;
 			children = (
 				5CBF9AD128B1424900BBBA24 /* MainViewController.swift */,
-				5C836AEC28B2BF5E00C7B7F1 /* HotSalesCollectionView */,
+				AB62EED928C79083009EB555 /* ViewModels */,
+				5C836AEC28B2BF5E00C7B7F1 /* Cells */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		AB62EED928C79083009EB555 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				5C836AED28B2C05B00C7B7F1 /* HotSalesCellViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		AB62EEDA28C790DE009EB555 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				5C91410A28B3CA8D00FB9240 /* ApiModel */,
+				5C91410728B3C9EA00FB9240 /* Decoding */,
+				5C91410328B3C14100FB9240 /* Network */,
+			);
+			path = Core;
 			sourceTree = "<group>";
 		};
 		ABB3D95828C67F53006014A9 /* Requests */ = {
@@ -250,6 +269,7 @@
 				5CBF9AD228B1424900BBBA24 /* MainViewController.swift in Sources */,
 				5CBF9ACE28B1424900BBBA24 /* AppDelegate.swift in Sources */,
 				5C836AF128B2E0C000C7B7F1 /* UIColor+extension.swift in Sources */,
+				AB5B8D9728C77991005AA82B /* SelectCategoryViewCell.swift in Sources */,
 				5CBF9AD028B1424900BBBA24 /* SceneDelegate.swift in Sources */,
 				5C91410928B3CA0E00FB9240 /* Decoder.swift in Sources */,
 				5C836AEB28B2BF5600C7B7F1 /* HotSalesViewCell.swift in Sources */,
