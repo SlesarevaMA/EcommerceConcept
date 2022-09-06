@@ -158,17 +158,9 @@
 			isa = PBXGroup;
 			children = (
 				5CBF9AD128B1424900BBBA24 /* MainViewController.swift */,
-				AB5B8D9328C74300005AA82B /* SelectCategory */,
 				5C836AEC28B2BF5E00C7B7F1 /* HotSalesCollectionView */,
 			);
 			path = Main;
-			sourceTree = "<group>";
-		};
-		AB5B8D9328C74300005AA82B /* SelectCategory */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = SelectCategory;
 			sourceTree = "<group>";
 		};
 		ABB3D95828C67F53006014A9 /* Requests */ = {
