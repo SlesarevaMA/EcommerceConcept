@@ -12,6 +12,29 @@ private enum Metrics {
     static let collectionViewInteritemSpacing: CGFloat = 12
 }
 
+protocol NSCollectionLayoutEnvironment : NSObjectProtocol {
+    var container: NSCollectionLayoutContainer { get }
+    var traitCollection: UITraitCollection { get }
+}
+
+enum Section: Int, CaseIterable {
+    case listSelectCategory
+    case listHotSales
+    case gridBestSeller
+    
+    func columnCount(for width: CGFloat) -> Int {
+        let wideMode = width > 800
+        switch self {
+        case .listSelectCategory:
+            return wideMode ? 2 : 1
+        case .listHotSales:
+            return wideMode ? 6 : 3
+        case .gridBestSeller:
+            return wideMode ? 2 : 1
+        }
+    }
+}
+
 final class MainViewController: UIViewController {
     
     private let hotSalesService = HotSalesServiceImpl()
