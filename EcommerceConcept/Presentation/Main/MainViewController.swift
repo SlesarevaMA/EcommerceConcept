@@ -12,13 +12,18 @@ private enum Metrics {
     static let collectionViewInteritemSpacing: CGFloat = 12
 }
 
+private enum Section: Int {
+    case hotSales
+}
+
 final class MainViewController: UIViewController {
     
     private let hotSalesService = HotSalesServiceImpl()
     
-    private let collectionViewLayout = UICollectionViewFlowLayout()
-    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
-
+    private lazy var collectionView: UICollectionView = {
+        UICollectionView(frame: .zero, collectionViewLayout: createLayout())
+    }()
+    
     private var hotSalesCells = [HotSalesCellViewModel]()
     
     override func viewDidLoad() {
@@ -49,16 +54,65 @@ final class MainViewController: UIViewController {
     }
     
     private func prepareCollectionView() {
-        collectionViewLayout.itemSize = CGSize(
-            width: view.frame.width,
-            height: Metrics.collectionViewHeight
-        )
-        collectionViewLayout.minimumInteritemSpacing = Metrics.collectionViewInteritemSpacing
-        collectionViewLayout.scrollDirection = .horizontal
+        collectionView.backgroundColor = .systemBackground
+
         collectionView.dataSource = self
         collectionView.register(HotSalesViewCell.self, forCellWithReuseIdentifier: HotSalesViewCell.reuseIdentifier)
     }
     
+    private func createLayout() -> UICollectionViewLayout {
+        let sectionProvider: UICollectionViewCompositionalLayoutSectionProvider = { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
+            guard let sectionKind = Section(rawValue: sectionIndex) else { return nil }
+            let section = self.layoutSection(for: sectionKind, layoutEnvironment: layoutEnvironment)
+            return section
+        }
+        
+        let config = UICollectionViewCompositionalLayoutConfiguration()
+        config.interSectionSpacing = Metrics.collectionViewInteritemSpacing
+        
+        return  UICollectionViewCompositionalLayout(sectionProvider: sectionProvider, configuration: config)
+    }
+    
+    private func sectionProvider(
+        sectionIndex: Int,
+        layoutEnvironment: NSCollectionLayoutEnvironment
+    ) -> NSCollectionLayoutSection? {
+        guard let sectionKind = Section(rawValue: sectionIndex) else {
+            return nil
+        }
+        
+        return layoutSection(for: sectionKind, layoutEnvironment: layoutEnvironment)
+    }
+    
+    private func layoutSection(
+        for section: Section,
+        layoutEnvironment: NSCollectionLayoutEnvironment
+    ) -> NSCollectionLayoutSection? {
+        switch section {
+        case .hotSales:
+            return hotSalesSection()
+        }
+    }
+    
+    private func hotSalesSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let layoutSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .absolute(Metrics.collectionViewHeight)
+        )
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .groupPaging
+        
+        return section
+    }
+
     private func requestItems() {
         hotSalesService.requestInfo { result in
             DispatchQueue.main.async {
