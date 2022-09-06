@@ -12,12 +12,7 @@ private enum Metrics {
     static let collectionViewInteritemSpacing: CGFloat = 12
 }
 
-protocol NSCollectionLayoutEnvironment : NSObjectProtocol {
-    var container: NSCollectionLayoutContainer { get }
-    var traitCollection: UITraitCollection { get }
-}
-
-enum Section: Int, CaseIterable {
+enum Section: Int {
     case listSelectCategory
     case listHotSales
     case gridBestSeller
@@ -26,11 +21,11 @@ enum Section: Int, CaseIterable {
         let wideMode = width > 800
         switch self {
         case .listSelectCategory:
-            return wideMode ? 2 : 1
+            return wideMode ? 5 : 1
         case .listHotSales:
-            return wideMode ? 6 : 3
+            return wideMode ? 3 : 1
         case .gridBestSeller:
-            return wideMode ? 2 : 1
+            return wideMode ? 4 : 2
         }
     }
 }
@@ -41,7 +36,7 @@ final class MainViewController: UIViewController {
     
     private let collectionViewLayout = UICollectionViewFlowLayout()
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
-
+    
     private var hotSalesCells = [HotSalesCellViewModel]()
     
     override func viewDidLoad() {
@@ -72,16 +67,54 @@ final class MainViewController: UIViewController {
     }
     
     private func prepareCollectionView() {
-        collectionViewLayout.itemSize = CGSize(
-            width: view.frame.width,
-            height: Metrics.collectionViewHeight
-        )
-        collectionViewLayout.minimumInteritemSpacing = Metrics.collectionViewInteritemSpacing
-        collectionViewLayout.scrollDirection = .horizontal
+        
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
+        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        collectionView.backgroundColor = .systemBackground
+
+//        collectionViewLayout.itemSize = CGSize(
+//            width: view.frame.width,
+//            height: Metrics.collectionViewHeight
+//        )
+//        collectionViewLayout.minimumInteritemSpacing = Metrics.collectionViewInteritemSpacing
+//        collectionViewLayout.scrollDirection = .horizontal
         collectionView.dataSource = self
         collectionView.register(HotSalesViewCell.self, forCellWithReuseIdentifier: HotSalesViewCell.reuseIdentifier)
     }
     
+    private func createLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
+            
+            guard let sectionKind = Section(rawValue: sectionIndex) else {
+                return nil
+            }
+            
+            let columns = sectionKind.columnCount(for: layoutEnvironment.container.effectiveContentSize.width)
+            let itemSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .fractionalHeight(1)
+            )
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            item.contentInsets = .init(top: 2, leading: 2, bottom: 2, trailing: 2)
+            
+            let groupHeight = columns == 1 ?
+            NSCollectionLayoutDimension.absolute(44) :
+            NSCollectionLayoutDimension.fractionalWidth(0.2)
+            
+            let groupSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: groupHeight
+            )
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+            
+            let section = NSCollectionLayoutSection(group: group)
+            section.contentInsets = .init(top: 20, leading: 20, bottom: 20, trailing: 20)
+            return section
+        }
+        
+        return layout
+    }
+
     private func requestItems() {
         hotSalesService.requestInfo { result in
             DispatchQueue.main.async {
