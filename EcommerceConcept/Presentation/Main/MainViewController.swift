@@ -26,6 +26,12 @@ final class MainViewController: UIViewController {
     
     private var hotSalesCells = [HotSalesCellViewModel]()
     
+    private var selectCategoryCellStore = [ "Phones": UIImage(named: "Phones"),
+                                            "Computer": UIImage(named: "Computer"),
+                                            "Health": UIImage(named: "Health"),
+                                            "Books": UIImage(named: "Books")
+    ]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -61,7 +67,8 @@ final class MainViewController: UIViewController {
     }
     
     private func createLayout() -> UICollectionViewLayout {
-        let sectionProvider: UICollectionViewCompositionalLayoutSectionProvider = { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
+        let sectionProvider: UICollectionViewCompositionalLayoutSectionProvider = {
+            (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             guard let sectionKind = Section(rawValue: sectionIndex) else { return nil }
             let section = self.layoutSection(for: sectionKind, layoutEnvironment: layoutEnvironment)
             return section
@@ -158,7 +165,7 @@ extension MainViewController: UICollectionViewDataSource {
         else {
             fatalError("Unable to dequeue RocketParametersViewCell")
         }
-        
+
         let model = hotSalesCells[indexPath.item]
         cell.configure(with: model)
 
