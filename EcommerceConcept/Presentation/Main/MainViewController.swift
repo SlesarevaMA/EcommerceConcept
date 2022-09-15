@@ -10,9 +10,13 @@ import UIKit
 private enum Metrics {
     static let collectionViewHeight: CGFloat = 182
     static let collectionViewInteritemSpacing: CGFloat = 12
+    
+    static let selectCategoryWidth: CGFloat = 71
+    static let selectCategoryHeight: CGFloat = 93
 }
 
-private enum Section: Int {
+private enum Section: Int, CaseIterable {
+    case selectCategory
     case hotSales
 }
 
@@ -26,10 +30,11 @@ final class MainViewController: UIViewController {
     
     private var hotSalesCells = [HotSalesCellViewModel]()
     
-    private var selectCategoryCellStore = [ "Phones": UIImage(named: "Phones"),
-                                            "Computer": UIImage(named: "Computer"),
-                                            "Health": UIImage(named: "Health"),
-                                            "Books": UIImage(named: "Books")
+    private var selectCategoryCells = [
+        SelectCategoryCellViewModel(image: UIImage(named: "Phones"), category: "Phones"),
+        SelectCategoryCellViewModel(image: UIImage(named: "Computer"), category: "Computer"),
+        SelectCategoryCellViewModel(image: UIImage(named: "Health"), category: "Health"),
+        SelectCategoryCellViewModel(image: UIImage(named: "Books"), category: "Books"),
     ]
     
     override func viewDidLoad() {
@@ -63,21 +68,25 @@ final class MainViewController: UIViewController {
         collectionView.backgroundColor = .systemBackground
 
         collectionView.dataSource = self
-        collectionView.register(HotSalesViewCell.self, forCellWithReuseIdentifier: HotSalesViewCell.reuseIdentifier)
+        collectionView.registerCell(cell: HotSalesViewCell.self)
+        collectionView.registerCell(cell: SelectCategoryViewCell.self)
     }
     
     private func createLayout() -> UICollectionViewLayout {
         let sectionProvider: UICollectionViewCompositionalLayoutSectionProvider = {
-            (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
-            guard let sectionKind = Section(rawValue: sectionIndex) else { return nil }
-            let section = self.layoutSection(for: sectionKind, layoutEnvironment: layoutEnvironment)
-            return section
+            [weak self] (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
+            
+            guard  let self = self, let sectionKind = Section(rawValue: sectionIndex) else {
+                return nil
+            }
+            
+            return self.layoutSection(for: sectionKind, layoutEnvironment: layoutEnvironment)
         }
         
         let config = UICollectionViewCompositionalLayoutConfiguration()
         config.interSectionSpacing = Metrics.collectionViewInteritemSpacing
         
-        return  UICollectionViewCompositionalLayout(sectionProvider: sectionProvider, configuration: config)
+        return UICollectionViewCompositionalLayout(sectionProvider: sectionProvider, configuration: config)
     }
     
     private func sectionProvider(
@@ -98,6 +107,8 @@ final class MainViewController: UIViewController {
         switch section {
         case .hotSales:
             return hotSalesSection()
+        case .selectCategory:
+            return selectCategorySection()
         }
     }
     
@@ -119,13 +130,32 @@ final class MainViewController: UIViewController {
         
         return section
     }
+    
+    private func selectCategorySection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let layoutSize = NSCollectionLayoutSize(
+            widthDimension: .absolute(Metrics.selectCategoryWidth),
+            heightDimension: .absolute(Metrics.selectCategoryHeight)
+        )
+        
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .groupPaging
+        
+        return section
+    }
 
     private func requestItems() {
         hotSalesService.requestInfo { result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let results):
-                    self.hotSalesCells = self.getViewModels(from: results)
+                    self.hotSalesCells = results.map(self.mapHotSalesViewModel)
                     self.collectionView.reloadData()
                 case .failure(let error):
                     print(error)
@@ -134,41 +164,52 @@ final class MainViewController: UIViewController {
         }
     }
     
-    private func getViewModels(from apiModels: [HotSales]) -> [HotSalesCellViewModel] {
-        var hotSalesCells = [HotSalesCellViewModel]()
-                
-        for model in apiModels {
-            let cell = HotSalesCellViewModel(
-                image: nil,
-                isNewLabelVisible: model.isNew,
-                brand: model.title,
-                description: model.subtitle
-            )
-            
-            hotSalesCells.append(cell)
-        }
-        
-        return hotSalesCells
+    private func mapHotSalesViewModel(from apiModel: HotSales) -> HotSalesCellViewModel {
+        return HotSalesCellViewModel(
+            image: nil,
+            isNewLabelVisible: apiModel.isNew,
+            brand: apiModel.title,
+            description: apiModel.subtitle
+        )
     }
 }
 
 extension MainViewController: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return Section.allCases.count
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return hotSalesCells.count
+        guard let section = Section(rawValue: section) else {
+            return 0
+        }
+        
+        switch section {
+        case .hotSales:
+            return hotSalesCells.count
+        case .selectCategory:
+            return selectCategoryCells.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: HotSalesViewCell.reuseIdentifier,
-            for: indexPath
-        ) as? HotSalesViewCell
-        else {
-            fatalError("Unable to dequeue RocketParametersViewCell")
+        guard let section = Section(rawValue: indexPath.section) else {
+            assertionFailure("Wrong section \(indexPath.section)")
+            return UICollectionViewCell()
         }
+        
+        switch section {
+        case .hotSales:
+            let cell: HotSalesViewCell = collectionView.dequeueReusableCell(for: indexPath)
+            let model = hotSalesCells[indexPath.item]
+            cell.configure(with: model)
+            return cell
 
-        let model = hotSalesCells[indexPath.item]
-        cell.configure(with: model)
-
-        return cell
+        case .selectCategory:
+            let cell: SelectCategoryViewCell = collectionView.dequeueReusableCell(for: indexPath)
+            let model = selectCategoryCells[indexPath.item]
+            cell.configure(with: model)
+            return cell
+        }
     }
 }
