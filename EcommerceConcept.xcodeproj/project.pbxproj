@@ -172,8 +172,8 @@
 		AB62EED928C79083009EB555 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				5C836AED28B2C05B00C7B7F1 /* HotSalesCellViewModel.swift */,
 				AB62EEDB28CA08F7009EB555 /* SelectCategoryCellViewModel.swift */,
+				5C836AED28B2C05B00C7B7F1 /* HotSalesCellViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";

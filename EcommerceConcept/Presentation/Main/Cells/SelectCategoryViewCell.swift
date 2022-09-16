@@ -13,12 +13,15 @@ private enum Metrics {
     
     static let categoryLabelFont: UIFont = .systemFont(ofSize: 12)
     
+    static let defaultColor: UIColor = .init(hex: 0xB3B3C3)
     static let isSelectedColor: UIColor = .init(hex: 0xFF6E4E)
+    static let whiteColor: UIColor = .init(hex: 0xFFFFFF)
+    static let tintColor: UIColor = .init(hex: 0xB3B3C3)
 }
 
 final class SelectCategoryViewCell: UICollectionViewCell, Identifiable {
     
-    private let imageView = UIImageView()
+    private let button = UIButton()
     private let categoryLabel = UILabel()
     
     override init(frame: CGRect) {
@@ -31,13 +34,23 @@ final class SelectCategoryViewCell: UICollectionViewCell, Identifiable {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        // Set frame for newLabel
+        button.layoutIfNeeded()
+        button.layer.cornerRadius = button.frame.height / 2
+    }
+    
     func configure(with model: SelectCategoryCellViewModel) {
-        imageView.image = model.image
+        button.setImage(model.image, for: .normal)
+        
         categoryLabel.text = model.category
     }
     
-    func isSelected() {
-        imageView.backgroundColor = Metrics.isSelectedColor
+    @objc func selected() {
+        button.backgroundColor = Metrics.isSelectedColor
+        button.tintColor = Metrics.whiteColor
         categoryLabel.textColor = Metrics.isSelectedColor
     }
     
@@ -47,27 +60,26 @@ final class SelectCategoryViewCell: UICollectionViewCell, Identifiable {
     }
     
     private func addConstrains() {
-        [imageView, categoryLabel].forEach {
+        [button, categoryLabel].forEach {
             contentView.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
         NSLayoutConstraint.activate([
-            imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor),
-            imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            button.widthAnchor.constraint(equalTo: button.heightAnchor),
+            button.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            button.topAnchor.constraint(equalTo: contentView.topAnchor),
+            button.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             
-            categoryLabel.leadingAnchor.constraint(
-                equalTo: contentView.leadingAnchor,
-                constant: Metrics.categoryLabelIndent
-            ),
-            categoryLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: Metrics.verticalSpacing)
+            categoryLabel.centerXAnchor.constraint(equalTo: button.centerXAnchor),
+            categoryLabel.topAnchor.constraint(equalTo: button.bottomAnchor, constant: Metrics.verticalSpacing)
         ])
     }
     
     private func configureSubviews() {
-        imageView.layer.cornerRadius = imageView.frame.height / 2
+        button.backgroundColor = Metrics.whiteColor
+        button.tintColor = Metrics.tintColor
+        button.addTarget(self, action: #selector(selected), for: .touchUpInside)
         
         categoryLabel.font = Metrics.categoryLabelFont
         categoryLabel.textAlignment = .center

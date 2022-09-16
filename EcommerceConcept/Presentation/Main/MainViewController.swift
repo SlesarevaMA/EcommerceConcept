@@ -13,6 +13,7 @@ private enum Metrics {
     
     static let selectCategoryWidth: CGFloat = 71
     static let selectCategoryHeight: CGFloat = 93
+    static let backgroundColor: UIColor = .init(hex: 0xE5E5E5)
 }
 
 private enum Section: Int, CaseIterable {
@@ -48,6 +49,7 @@ final class MainViewController: UIViewController {
         super.viewWillAppear(animated)
         
         requestItems()
+        configureView()
     }
     
     private func addSubviews() {
@@ -62,6 +64,10 @@ final class MainViewController: UIViewController {
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
+    }
+    
+    private func configureView() {
+        collectionView.backgroundColor = Metrics.backgroundColor
     }
     
     private func prepareCollectionView() {
@@ -144,6 +150,8 @@ final class MainViewController: UIViewController {
         )
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])
+        group.contentInsets = NSDirectionalEdgeInsets(top: 11.5, leading: 11.5, bottom: 11.5, trailing: 11.5)
+        
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
         
