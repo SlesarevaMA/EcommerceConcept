@@ -10,6 +10,7 @@ import UIKit
 private enum Metrics {
     static let categoryLabelIndent: CGFloat = 8
     static let verticalSpacing: CGFloat = 7
+    static let buttonSide: CGFloat = 71
     
     static let categoryLabelFont: UIFont = .systemFont(ofSize: 12)
     
@@ -17,12 +18,15 @@ private enum Metrics {
     static let isSelectedColor: UIColor = .init(hex: 0xFF6E4E)
     static let whiteColor: UIColor = .init(hex: 0xFFFFFF)
     static let tintColor: UIColor = .init(hex: 0xB3B3C3)
+    static let categoryLabelColor: UIColor = .black
 }
 
 final class SelectCategoryViewCell: UICollectionViewCell, Identifiable {
     
     private let button = UIButton()
     private let categoryLabel = UILabel()
+    
+    private var isSelectedCategory = true
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -49,9 +53,17 @@ final class SelectCategoryViewCell: UICollectionViewCell, Identifiable {
     }
     
     @objc func selected() {
-        button.backgroundColor = Metrics.isSelectedColor
-        button.tintColor = Metrics.whiteColor
-        categoryLabel.textColor = Metrics.isSelectedColor
+        if isSelectedCategory {
+            button.backgroundColor = Metrics.isSelectedColor
+            button.tintColor = Metrics.whiteColor
+            categoryLabel.textColor = Metrics.isSelectedColor
+            isSelectedCategory = false
+        } else {
+            button.backgroundColor = Metrics.whiteColor
+            button.tintColor = Metrics.tintColor
+            categoryLabel.textColor = Metrics.categoryLabelColor
+            isSelectedCategory = true
+        }
     }
     
     private func configure() {
@@ -66,6 +78,7 @@ final class SelectCategoryViewCell: UICollectionViewCell, Identifiable {
         }
         
         NSLayoutConstraint.activate([
+            button.widthAnchor.constraint(equalToConstant: Metrics.buttonSide),
             button.widthAnchor.constraint(equalTo: button.heightAnchor),
             button.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             button.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -80,6 +93,7 @@ final class SelectCategoryViewCell: UICollectionViewCell, Identifiable {
         button.backgroundColor = Metrics.whiteColor
         button.tintColor = Metrics.tintColor
         button.addTarget(self, action: #selector(selected), for: .touchUpInside)
+//        button.contentEdgeInsets = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
         
         categoryLabel.font = Metrics.categoryLabelFont
         categoryLabel.textAlignment = .center

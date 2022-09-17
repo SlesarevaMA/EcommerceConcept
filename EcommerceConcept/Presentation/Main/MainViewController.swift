@@ -145,12 +145,12 @@ final class MainViewController: UIViewController {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         let layoutSize = NSCollectionLayoutSize(
-            widthDimension: .absolute(Metrics.selectCategoryWidth),
-            heightDimension: .absolute(Metrics.selectCategoryHeight)
+            widthDimension: .fractionalWidth(0.25),
+            heightDimension: .estimated(Metrics.selectCategoryHeight)
         )
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])
-        group.contentInsets = NSDirectionalEdgeInsets(top: 11.5, leading: 11.5, bottom: 11.5, trailing: 11.5)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 24, leading: 11.5, bottom: 0, trailing: 11.5)
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
