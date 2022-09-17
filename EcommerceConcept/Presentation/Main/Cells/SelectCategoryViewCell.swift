@@ -76,14 +76,14 @@ final class SelectCategoryViewCell: UICollectionViewCell, Identifiable {
     private func configureSubviews() {
         categoryButton.backgroundColor = Metrics.whiteColor
         categoryButton.tintColor = Metrics.tintColor
-        categoryButton.addTarget(self, action: #selector(selected), for: .touchUpInside)
+        categoryButton.addTarget(self, action: #selector(categorySelected), for: .touchUpInside)
         
         categoryLabel.font = Metrics.categoryLabelFont
         categoryLabel.textColor = Metrics.categoryLabelColor
         categoryLabel.textAlignment = .center
     }
     
-    @objc private func selected() {
+    @objc private func categorySelected() {
         if isCategorySelected {
             categoryButton.backgroundColor = Metrics.selectedColor
             categoryButton.tintColor = Metrics.whiteColor

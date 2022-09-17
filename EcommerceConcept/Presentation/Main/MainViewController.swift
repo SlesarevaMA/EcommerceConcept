@@ -8,17 +8,21 @@
 import UIKit
 
 private enum Metrics {
-    static let collectionViewHeight: CGFloat = 182
-    static let collectionViewInteritemSpacing: CGFloat = 12
+    enum SelectCategory {
+        static let width: CGFloat = 71
+        static let height: CGFloat = 93
+        static let horizontalEdgeInsets: CGFloat = 11.5
+    }
     
-    static let selectCategoryWidth: CGFloat = 71
-    static let selectCategoryHeight: CGFloat = 93
-    static let selectCategoryEdgeInsets: NSDirectionalEdgeInsets = .init(top: 0,
-                                                                         leading: 11.5,
-                                                                         bottom: 0,
-                                                                         trailing: 11.5)
+    enum CollectionView {
+        static let interitemSpacing: CGFloat = 12
+        
+        static let backgroundColor: UIColor = .init(hex: 0xE5E5E5)
+    }
     
-    static let backgroundColor: UIColor = .init(hex: 0xE5E5E5)
+    enum HotSales {
+        static let height: CGFloat = 182
+    }
 }
 
 private enum Section: Int, CaseIterable {
@@ -71,7 +75,7 @@ final class MainViewController: UIViewController {
     }
     
     private func prepareCollectionView() {
-        collectionView.backgroundColor = Metrics.backgroundColor
+        collectionView.backgroundColor = Metrics.CollectionView.backgroundColor
 
         collectionView.dataSource = self
         collectionView.register(cell: HotSalesViewCell.self)
@@ -90,7 +94,7 @@ final class MainViewController: UIViewController {
         }
         
         let config = UICollectionViewCompositionalLayoutConfiguration()
-        config.interSectionSpacing = Metrics.collectionViewInteritemSpacing
+        config.interSectionSpacing = Metrics.CollectionView.interitemSpacing
         
         return UICollectionViewCompositionalLayout(sectionProvider: sectionProvider, configuration: config)
     }
@@ -127,7 +131,7 @@ final class MainViewController: UIViewController {
         
         let layoutSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .absolute(Metrics.collectionViewHeight)
+            heightDimension: .absolute(Metrics.HotSales.height)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])
         
@@ -146,11 +150,14 @@ final class MainViewController: UIViewController {
         
         let layoutSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(0.25),
-            heightDimension: .estimated(Metrics.selectCategoryHeight)
+            heightDimension: .estimated(Metrics.SelectCategory.height)
         )
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])
-        group.contentInsets = Metrics.selectCategoryEdgeInsets
+        group.contentInsets = NSDirectionalEdgeInsets(top: 0,
+                                                      leading: Metrics.SelectCategory.horizontalEdgeInsets,
+                                                      bottom: 0,
+                                                      trailing: Metrics.SelectCategory.horizontalEdgeInsets)
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
