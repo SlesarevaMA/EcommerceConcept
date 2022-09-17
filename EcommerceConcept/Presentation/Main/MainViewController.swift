@@ -13,6 +13,11 @@ private enum Metrics {
     
     static let selectCategoryWidth: CGFloat = 71
     static let selectCategoryHeight: CGFloat = 93
+    static let selectCategoryEdgeInsets: NSDirectionalEdgeInsets = .init(top: 0,
+                                                                         leading: 11.5,
+                                                                         bottom: 0,
+                                                                         trailing: 11.5)
+    
     static let backgroundColor: UIColor = .init(hex: 0xE5E5E5)
 }
 
@@ -49,7 +54,6 @@ final class MainViewController: UIViewController {
         super.viewWillAppear(animated)
         
         requestItems()
-        configureView()
     }
     
     private func addSubviews() {
@@ -62,20 +66,16 @@ final class MainViewController: UIViewController {
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
     
-    private func configureView() {
-        collectionView.backgroundColor = Metrics.backgroundColor
-    }
-    
     private func prepareCollectionView() {
-        collectionView.backgroundColor = .systemBackground
+        collectionView.backgroundColor = Metrics.backgroundColor
 
         collectionView.dataSource = self
-        collectionView.registerCell(cell: HotSalesViewCell.self)
-        collectionView.registerCell(cell: SelectCategoryViewCell.self)
+        collectionView.register(cell: HotSalesViewCell.self)
+        collectionView.register(cell: SelectCategoryViewCell.self)
     }
     
     private func createLayout() -> UICollectionViewLayout {
@@ -150,7 +150,7 @@ final class MainViewController: UIViewController {
         )
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])
-        group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 11.5, bottom: 0, trailing: 11.5)
+        group.contentInsets = Metrics.selectCategoryEdgeInsets
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging

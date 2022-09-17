@@ -8,14 +8,12 @@
 import UIKit
 
 private enum Metrics {
-    static let categoryLabelIndent: CGFloat = 8
     static let verticalSpacing: CGFloat = 7
-    static let buttonSide: CGFloat = 71
+    static let categoryButtonWidth: CGFloat = 71
     
     static let categoryLabelFont: UIFont = .systemFont(ofSize: 12)
     
-    static let defaultColor: UIColor = .init(hex: 0xB3B3C3)
-    static let isSelectedColor: UIColor = .init(hex: 0xFF6E4E)
+    static let selectedColor: UIColor = .init(hex: 0xFF6E4E)
     static let whiteColor: UIColor = .init(hex: 0xFFFFFF)
     static let tintColor: UIColor = .init(hex: 0xB3B3C3)
     static let categoryLabelColor: UIColor = .init(hex: 0x010035)
@@ -23,15 +21,15 @@ private enum Metrics {
 
 final class SelectCategoryViewCell: UICollectionViewCell, Identifiable {
     
-    private let button = UIButton()
+    private let categoryButton = UIButton()
     private let categoryLabel = UILabel()
     
-    private var isSelectedCategory = true
+    private var isCategorySelected = true
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        configure()
+        setup()
     }
     
     required init?(coder: NSCoder) {
@@ -42,60 +40,60 @@ final class SelectCategoryViewCell: UICollectionViewCell, Identifiable {
         super.layoutSubviews()
         
         // Set frame for newLabel
-        button.layoutIfNeeded()
-        button.layer.cornerRadius = button.frame.height / 2
+        categoryButton.layoutIfNeeded()
+        categoryButton.layer.cornerRadius = categoryButton.frame.height / 2
     }
     
     func configure(with model: SelectCategoryCellViewModel) {
-        button.setImage(model.image, for: .normal)
+        categoryButton.setImage(model.image, for: .normal)
         
         categoryLabel.text = model.category
     }
-    
-    @objc func selected() {
-        if isSelectedCategory {
-            button.backgroundColor = Metrics.isSelectedColor
-            button.tintColor = Metrics.whiteColor
-            categoryLabel.textColor = Metrics.isSelectedColor
-            isSelectedCategory = false
-        } else {
-            button.backgroundColor = Metrics.whiteColor
-            button.tintColor = Metrics.tintColor
-            categoryLabel.textColor = Metrics.categoryLabelColor
-            isSelectedCategory = true
-        }
-    }
-    
-    private func configure() {
+        
+    private func setup() {
         addConstrains()
         configureSubviews()
     }
     
     private func addConstrains() {
-        [button, categoryLabel].forEach {
+        [categoryButton, categoryLabel].forEach {
             contentView.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
         NSLayoutConstraint.activate([
-            button.widthAnchor.constraint(equalToConstant: Metrics.buttonSide),
-            button.widthAnchor.constraint(equalTo: button.heightAnchor),
-            button.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            button.topAnchor.constraint(equalTo: contentView.topAnchor),
-            button.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            categoryButton.widthAnchor.constraint(equalToConstant: Metrics.categoryButtonWidth),
+            categoryButton.widthAnchor.constraint(equalTo: categoryButton.heightAnchor),
+            categoryButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            categoryButton.topAnchor.constraint(equalTo: contentView.topAnchor),
+            categoryButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             
-            categoryLabel.centerXAnchor.constraint(equalTo: button.centerXAnchor),
-            categoryLabel.topAnchor.constraint(equalTo: button.bottomAnchor, constant: Metrics.verticalSpacing)
+            categoryLabel.centerXAnchor.constraint(equalTo: categoryButton.centerXAnchor),
+            categoryLabel.topAnchor.constraint(equalTo: categoryButton.bottomAnchor, constant: Metrics.verticalSpacing)
         ])
     }
     
     private func configureSubviews() {
-        button.backgroundColor = Metrics.whiteColor
-        button.tintColor = Metrics.tintColor
-        button.addTarget(self, action: #selector(selected), for: .touchUpInside)
+        categoryButton.backgroundColor = Metrics.whiteColor
+        categoryButton.tintColor = Metrics.tintColor
+        categoryButton.addTarget(self, action: #selector(selected), for: .touchUpInside)
         
         categoryLabel.font = Metrics.categoryLabelFont
         categoryLabel.textColor = Metrics.categoryLabelColor
         categoryLabel.textAlignment = .center
+    }
+    
+    @objc private func selected() {
+        if isCategorySelected {
+            categoryButton.backgroundColor = Metrics.selectedColor
+            categoryButton.tintColor = Metrics.whiteColor
+            categoryLabel.textColor = Metrics.selectedColor
+            isCategorySelected = false
+        } else {
+            categoryButton.backgroundColor = Metrics.whiteColor
+            categoryButton.tintColor = Metrics.tintColor
+            categoryLabel.textColor = Metrics.categoryLabelColor
+            isCategorySelected = true
+        }
     }
 }
