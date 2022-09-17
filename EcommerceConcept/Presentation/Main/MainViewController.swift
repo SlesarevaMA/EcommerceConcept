@@ -60,9 +60,9 @@ final class MainViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
     
@@ -150,7 +150,7 @@ final class MainViewController: UIViewController {
         )
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])
-        group.contentInsets = NSDirectionalEdgeInsets(top: 24, leading: 11.5, bottom: 0, trailing: 11.5)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 11.5, bottom: 0, trailing: 11.5)
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging

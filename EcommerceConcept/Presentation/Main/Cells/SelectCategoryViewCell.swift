@@ -18,7 +18,7 @@ private enum Metrics {
     static let isSelectedColor: UIColor = .init(hex: 0xFF6E4E)
     static let whiteColor: UIColor = .init(hex: 0xFFFFFF)
     static let tintColor: UIColor = .init(hex: 0xB3B3C3)
-    static let categoryLabelColor: UIColor = .black
+    static let categoryLabelColor: UIColor = .init(hex: 0x010035)
 }
 
 final class SelectCategoryViewCell: UICollectionViewCell, Identifiable {
@@ -93,9 +93,9 @@ final class SelectCategoryViewCell: UICollectionViewCell, Identifiable {
         button.backgroundColor = Metrics.whiteColor
         button.tintColor = Metrics.tintColor
         button.addTarget(self, action: #selector(selected), for: .touchUpInside)
-//        button.contentEdgeInsets = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
         
         categoryLabel.font = Metrics.categoryLabelFont
+        categoryLabel.textColor = Metrics.categoryLabelColor
         categoryLabel.textAlignment = .center
     }
 }
