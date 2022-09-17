@@ -8,11 +8,25 @@
 import UIKit
 
 private enum Metrics {
-    static let collectionViewHeight: CGFloat = 182
-    static let collectionViewInteritemSpacing: CGFloat = 12
+    enum SelectCategory {
+        static let width: CGFloat = 71
+        static let height: CGFloat = 93
+        static let horizontalEdgeInsets: CGFloat = 11.5
+    }
+    
+    enum CollectionView {
+        static let interitemSpacing: CGFloat = 12
+        
+        static let backgroundColor: UIColor = .init(hex: 0xE5E5E5)
+    }
+    
+    enum HotSales {
+        static let height: CGFloat = 182
+    }
 }
 
-private enum Section: Int {
+private enum Section: Int, CaseIterable {
+    case selectCategory
     case hotSales
 }
 
@@ -25,6 +39,13 @@ final class MainViewController: UIViewController {
     }()
     
     private var hotSalesCells = [HotSalesCellViewModel]()
+    
+    private var selectCategoryCells = [
+        SelectCategoryCellViewModel(image: UIImage(named: "Phones"), category: "Phones"),
+        SelectCategoryCellViewModel(image: UIImage(named: "Computer"), category: "Computer"),
+        SelectCategoryCellViewModel(image: UIImage(named: "Health"), category: "Health"),
+        SelectCategoryCellViewModel(image: UIImage(named: "Books"), category: "Books"),
+    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,30 +68,35 @@ final class MainViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
     
     private func prepareCollectionView() {
-        collectionView.backgroundColor = .systemBackground
+        collectionView.backgroundColor = Metrics.CollectionView.backgroundColor
 
         collectionView.dataSource = self
-        collectionView.register(HotSalesViewCell.self, forCellWithReuseIdentifier: HotSalesViewCell.reuseIdentifier)
+        collectionView.register(cell: HotSalesViewCell.self)
+        collectionView.register(cell: SelectCategoryViewCell.self)
     }
     
     private func createLayout() -> UICollectionViewLayout {
-        let sectionProvider: UICollectionViewCompositionalLayoutSectionProvider = { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
-            guard let sectionKind = Section(rawValue: sectionIndex) else { return nil }
-            let section = self.layoutSection(for: sectionKind, layoutEnvironment: layoutEnvironment)
-            return section
+        let sectionProvider: UICollectionViewCompositionalLayoutSectionProvider = {
+            [weak self] (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
+            
+            guard  let self = self, let sectionKind = Section(rawValue: sectionIndex) else {
+                return nil
+            }
+            
+            return self.layoutSection(for: sectionKind, layoutEnvironment: layoutEnvironment)
         }
         
         let config = UICollectionViewCompositionalLayoutConfiguration()
-        config.interSectionSpacing = Metrics.collectionViewInteritemSpacing
+        config.interSectionSpacing = Metrics.CollectionView.interitemSpacing
         
-        return  UICollectionViewCompositionalLayout(sectionProvider: sectionProvider, configuration: config)
+        return UICollectionViewCompositionalLayout(sectionProvider: sectionProvider, configuration: config)
     }
     
     private func sectionProvider(
@@ -91,6 +117,8 @@ final class MainViewController: UIViewController {
         switch section {
         case .hotSales:
             return hotSalesSection()
+        case .selectCategory:
+            return selectCategorySection()
         }
     }
     
@@ -103,9 +131,33 @@ final class MainViewController: UIViewController {
         
         let layoutSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .absolute(Metrics.collectionViewHeight)
+            heightDimension: .absolute(Metrics.HotSales.height)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .groupPaging
+        
+        return section
+    }
+    
+    private func selectCategorySection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let layoutSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(0.25),
+            heightDimension: .estimated(Metrics.SelectCategory.height)
+        )
+        
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])
+        group.contentInsets = NSDirectionalEdgeInsets(top: 0,
+                                                      leading: Metrics.SelectCategory.horizontalEdgeInsets,
+                                                      bottom: 0,
+                                                      trailing: Metrics.SelectCategory.horizontalEdgeInsets)
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
@@ -118,7 +170,7 @@ final class MainViewController: UIViewController {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let results):
-                    self.hotSalesCells = self.getViewModels(from: results)
+                    self.hotSalesCells = results.map(self.mapHotSalesViewModel)
                     self.collectionView.reloadData()
                 case .failure(let error):
                     print(error)
@@ -127,41 +179,52 @@ final class MainViewController: UIViewController {
         }
     }
     
-    private func getViewModels(from apiModels: [HotSales]) -> [HotSalesCellViewModel] {
-        var hotSalesCells = [HotSalesCellViewModel]()
-                
-        for model in apiModels {
-            let cell = HotSalesCellViewModel(
-                image: nil,
-                isNewLabelVisible: model.isNew,
-                brand: model.title,
-                description: model.subtitle
-            )
-            
-            hotSalesCells.append(cell)
-        }
-        
-        return hotSalesCells
+    private func mapHotSalesViewModel(from apiModel: HotSales) -> HotSalesCellViewModel {
+        return HotSalesCellViewModel(
+            image: nil,
+            isNewLabelVisible: apiModel.isNew,
+            brand: apiModel.title,
+            description: apiModel.subtitle
+        )
     }
 }
 
 extension MainViewController: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return Section.allCases.count
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return hotSalesCells.count
+        guard let section = Section(rawValue: section) else {
+            return 0
+        }
+        
+        switch section {
+        case .hotSales:
+            return hotSalesCells.count
+        case .selectCategory:
+            return selectCategoryCells.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: HotSalesViewCell.reuseIdentifier,
-            for: indexPath
-        ) as? HotSalesViewCell
-        else {
-            fatalError("Unable to dequeue RocketParametersViewCell")
+        guard let section = Section(rawValue: indexPath.section) else {
+            assertionFailure("Wrong section \(indexPath.section)")
+            return UICollectionViewCell()
         }
         
-        let model = hotSalesCells[indexPath.item]
-        cell.configure(with: model)
+        switch section {
+        case .hotSales:
+            let cell: HotSalesViewCell = collectionView.dequeueReusableCell(for: indexPath)
+            let model = hotSalesCells[indexPath.item]
+            cell.configure(with: model)
+            return cell
 
-        return cell
+        case .selectCategory:
+            let cell: SelectCategoryViewCell = collectionView.dequeueReusableCell(for: indexPath)
+            let model = selectCategoryCells[indexPath.item]
+            cell.configure(with: model)
+            return cell
+        }
     }
 }
