@@ -8,7 +8,7 @@
 import UIKit
 
 struct HotSalesCellViewModel {
-    let image: UIImage?
+    let imageUrl: URL
     let isNewLabelVisible: Bool
     let brand: String
     let description: String

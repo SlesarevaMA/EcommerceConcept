@@ -12,7 +12,7 @@ struct HotSales: Codable {
     let isNew: Bool
     let title: String
     let subtitle: String
-    let picture: String
+    let picture: URL
     let isBuy: Bool
 }
 
@@ -28,7 +28,7 @@ extension HotSales {
         isNew = try container.decodeIfPresent(Bool.self, forKey: .isNew) ?? false
         title = try container.decode(String.self, forKey: .title)
         subtitle = try container.decode(String.self, forKey: .subtitle)
-        picture = try container.decode(String.self, forKey: .picture)
+        picture = try container.decode(URL.self, forKey: .picture)
         isBuy = try container.decode(Bool.self, forKey: .isBuy)
     }
 }

@@ -9,6 +9,7 @@ import Foundation
 
 protocol HotSalesService {
     func requestInfo(completion: @escaping (Result<[HotSales], Error>) -> Void)
+    func requestImage(at url: URL, completion: @escaping (Result<Data, Error>) -> Void)
 }
 
 final class HotSalesServiceImpl: HotSalesService {
@@ -31,6 +32,14 @@ final class HotSalesServiceImpl: HotSalesService {
             case .failure(let error):
                 completion(.failure(error))
             }
+        }
+    }
+    
+    func requestImage(at url: URL, completion: @escaping (Result<Data, Error>) -> Void) {
+        let imageRequest = HomeStoreImageRequest(url: url)
+        
+        networkManager.sendRequest(request: imageRequest) { result in
+            completion(result)
         }
     }
 }
