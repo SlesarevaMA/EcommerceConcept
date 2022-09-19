@@ -9,22 +9,25 @@ import UIKit
 
 private enum Metrics {
     enum Spacings {
-        static let topNewSpacing: CGFloat = 14
-        static let leadingSpacing: CGFloat = 25
-        static let topBrandSpacing: CGFloat = 18
-        static let topDescriptionSpacing: CGFloat = 5
-        static let topBuySpacing: CGFloat = 26
-        static let trailingBuySpacing: CGFloat = 17
+        static let newTop: CGFloat = 14
+        static let leading: CGFloat = 25
+        static let brandTop: CGFloat = 18
+        static let descriptionTop: CGFloat = 5
+        static let buyTop: CGFloat = 26
+        static let buyTrailing: CGFloat = 17
+        static let brandTrailing: CGFloat = 6
+        static let minVertical: CGFloat = 8
     }
     
     enum Size {
         static let newLabelWidth: CGFloat = 27
+        static let contentViewMultiplier: CGFloat = 0.6
     }
     
     enum Font {
         static let newLabel: UIFont = .systemFont(ofSize: 10)
         static let brandLabel: UIFont = .systemFont(ofSize: 25)
-        static let descriptionLabel: UIFont = .systemFont(ofSize: 25)
+        static let descriptionLabel: UIFont = .systemFont(ofSize: 11)
         static let buyButton: UIFont = .boldSystemFont(ofSize: 11)
     }
     
@@ -50,12 +53,16 @@ private enum Metrics {
 }
 
 final class HotSalesViewCell: UICollectionViewCell, Identifiable {
+    
+    private(set) var imageUrl: URL?
         
     private let newLabel = UILabel()
     private let brandLabel = UILabel()
     private let descriptionLabel = UILabel()
     private let buyButton = UIButton()
-    private let imageView = UIImageView()
+    private let productImageView = UIImageView()
+    private let containerView = UIView()
+    private let gradientLayer = CAGradientLayer()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -70,16 +77,23 @@ final class HotSalesViewCell: UICollectionViewCell, Identifiable {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        // Set frame for newLabel
+        // Set frames for subviews
         newLabel.layoutIfNeeded()
+        productImageView.layoutIfNeeded()
+        
         newLabel.layer.cornerRadius = newLabel.frame.height / 2
+        gradientLayer.frame = productImageView.bounds
     }
 
     func configure(with model: HotSalesCellViewModel) {
-        newLabel.isHidden = !(model.isNewLabelVisible)
+        newLabel.isHidden = !model.isNewLabelVisible
         brandLabel.text = model.brand
         descriptionLabel.text = model.description
-        imageView.image = model.image
+        imageUrl = model.imageUrl
+    }
+    
+    func addProductImage(image: UIImage?) {
+        productImageView.image = image
     }
     
     private func configure() {
@@ -88,59 +102,81 @@ final class HotSalesViewCell: UICollectionViewCell, Identifiable {
     }
 
     private func addConstrains() {
-        [newLabel, brandLabel, descriptionLabel, buyButton, imageView].forEach {
+        [newLabel, brandLabel, descriptionLabel, buyButton].forEach {
+            containerView.addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+        
+        [productImageView, containerView].forEach {
             contentView.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
         NSLayoutConstraint.activate([
             newLabel.widthAnchor.constraint(equalTo: newLabel.heightAnchor),
-            newLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Metrics.Spacings.topNewSpacing),
+            newLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: Metrics.Spacings.newTop),
             newLabel.leadingAnchor.constraint(
-                equalTo: contentView.leadingAnchor,
-                constant: Metrics.Spacings.leadingSpacing
+                equalTo: containerView.leadingAnchor,
+                constant: Metrics.Spacings.leading
             ),
             newLabel.widthAnchor.constraint(equalToConstant: Metrics.Size.newLabelWidth),
             
-            brandLabel.topAnchor.constraint(equalTo: newLabel.bottomAnchor, constant: Metrics.Spacings.topBrandSpacing),
-            brandLabel.leadingAnchor.constraint(
-                equalTo: contentView.leadingAnchor,
-                constant: Metrics.Spacings.leadingSpacing
+            brandLabel.topAnchor.constraint(
+                lessThanOrEqualTo: newLabel.bottomAnchor,
+                constant: Metrics.Spacings.brandTop
             ),
-            brandLabel.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor),
-            
+            brandLabel.leadingAnchor.constraint(
+                equalTo: containerView.leadingAnchor,
+                constant: Metrics.Spacings.leading
+            ),
+            brandLabel.trailingAnchor.constraint(
+                equalTo: containerView.trailingAnchor,
+                constant: -Metrics.Spacings.brandTrailing
+            ),
+
             descriptionLabel.topAnchor.constraint(
                 equalTo: brandLabel.bottomAnchor,
-                constant: Metrics.Spacings.topDescriptionSpacing
+                constant: Metrics.Spacings.descriptionTop
             ),
             descriptionLabel.leadingAnchor.constraint(
-                equalTo: contentView.leadingAnchor,
-                constant: Metrics.Spacings.leadingSpacing
+                equalTo: containerView.leadingAnchor,
+                constant: Metrics.Spacings.leading
             ),
-            descriptionLabel.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor),
+            descriptionLabel.trailingAnchor.constraint(lessThanOrEqualTo: brandLabel.trailingAnchor),
             
             buyButton.topAnchor.constraint(
                 equalTo: descriptionLabel.bottomAnchor,
-                constant: Metrics.Spacings.topBuySpacing
+                constant: Metrics.Spacings.buyTop
             ),
             buyButton.leadingAnchor.constraint(
-                equalTo: contentView.leadingAnchor,
-                constant: Metrics.Spacings.leadingSpacing
+                equalTo: containerView.leadingAnchor,
+                constant: Metrics.Spacings.leading
             ),
-            buyButton.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor),
+            buyButton.bottomAnchor.constraint(
+                equalTo: containerView.bottomAnchor,
+                constant: -Metrics.Spacings.minVertical
+            ),
             
-            imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            imageView.leadingAnchor.constraint(
-                equalTo: buyButton.trailingAnchor,
-                constant: Metrics.Spacings.trailingBuySpacing
+            containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            containerView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            containerView.widthAnchor.constraint(
+                equalTo: contentView.widthAnchor,
+                multiplier: Metrics.Size.contentViewMultiplier
             ),
-            imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            
+            productImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            productImageView.widthAnchor.constraint(
+                lessThanOrEqualTo: contentView.widthAnchor,
+                multiplier: Metrics.Size.contentViewMultiplier
+            ),
+            productImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            productImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
     
     private func configureSubviews() {
-        self.backgroundColor = Metrics.Color.background
+        backgroundColor = Metrics.Color.background
         
         newLabel.text = Metrics.Text.newLabel
         newLabel.textColor = Metrics.Color.newLabelText
@@ -151,6 +187,7 @@ final class HotSalesViewCell: UICollectionViewCell, Identifiable {
         
         brandLabel.textColor = Metrics.Color.brandLabelText
         brandLabel.font = Metrics.Font.brandLabel
+        brandLabel.numberOfLines = 2
         
         descriptionLabel.textColor = Metrics.Color.descriptionLabelText
         descriptionLabel.font = Metrics.Font.descriptionLabel
@@ -161,5 +198,13 @@ final class HotSalesViewCell: UICollectionViewCell, Identifiable {
         buyButton.backgroundColor = Metrics.Color.buyButtonBackground
         buyButton.layer.cornerRadius = Metrics.Dimension.buyButtonCornerRadius
         buyButton.contentEdgeInsets = Metrics.Dimension.buyButtonContentEdgeInsets
+        
+        productImageView.contentMode = .scaleAspectFill
+        productImageView.clipsToBounds = true
+        
+        gradientLayer.startPoint = CGPoint(x: 0.3, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 0.6, y: 0.5)
+        gradientLayer.colors = [UIColor.black.cgColor, UIColor.black.withAlphaComponent(0).cgColor]
+        productImageView.layer.addSublayer(gradientLayer)
     }
 }

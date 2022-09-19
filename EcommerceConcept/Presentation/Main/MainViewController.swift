@@ -32,6 +32,8 @@ private enum Section: Int, CaseIterable {
 
 final class MainViewController: UIViewController {
     
+    private var hotsalesImagesStore = [URL: UIImage]()
+    
     private let hotSalesService = HotSalesServiceImpl()
     
     private lazy var collectionView: UICollectionView = {
@@ -181,11 +183,34 @@ final class MainViewController: UIViewController {
     
     private func mapHotSalesViewModel(from apiModel: HotSales) -> HotSalesCellViewModel {
         return HotSalesCellViewModel(
-            image: nil,
+            imageUrl: apiModel.picture,
             isNewLabelVisible: apiModel.isNew,
             brand: apiModel.title,
             description: apiModel.subtitle
         )
+    }
+    
+    private func addProductImage(for cell: HotSalesViewCell, with url: URL) {
+        if let image = hotsalesImagesStore[url] {
+            cell.addProductImage(image: image)
+        } else {
+            hotSalesService.requestImage(at: url) { [weak self] result in
+                DispatchQueue.main.async {
+                    guard cell.imageUrl == url else {
+                        return
+                    }
+                    
+                    switch result {
+                    case .success(let imageData):
+                        let image = UIImage(data: imageData)
+                        self?.hotsalesImagesStore[url] = image
+                        cell.addProductImage(image: image)
+                    case .failure(let error):
+                        print(error)
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -217,6 +242,7 @@ extension MainViewController: UICollectionViewDataSource {
         case .hotSales:
             let cell: HotSalesViewCell = collectionView.dequeueReusableCell(for: indexPath)
             let model = hotSalesCells[indexPath.item]
+            addProductImage(for: cell, with: model.imageUrl)
             cell.configure(with: model)
             return cell
 
