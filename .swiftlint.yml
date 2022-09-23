@@ -1,0 +1,5 @@
+excluded:
+  - .git
+
+disabled_rules:
+  - trailing_whitespace
