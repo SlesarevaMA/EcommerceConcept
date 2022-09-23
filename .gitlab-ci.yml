@@ -1,0 +1,14 @@
+stages:
+    - danger
+
+before_script:
+    - chmod +x bootstrap.sh
+    - bash bootstrap.sh
+
+danger:
+    stage: danger
+    script:
+        - source ~/.bash_profile
+        - rbenv local 2.7.5
+        - rbenv rehash
+        - bundle exec danger --fail-on-errors=true
