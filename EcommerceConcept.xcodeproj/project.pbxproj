@@ -31,8 +31,8 @@
 		ABF057CB28D888AC00CF132F /* BestSellerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF057CA28D888AC00CF132F /* BestSellerService.swift */; };
 		ABF057CD28D8B4FB00CF132F /* BestSellerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF057CC28D8B4FB00CF132F /* BestSellerViewCell.swift */; };
 		ABF057CF28D9217D00CF132F /* NSAttributedString+.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF057CE28D9217D00CF132F /* NSAttributedString+.swift */; };
+		ABF5C4B428E09FB300C07B96 /* SearchBarViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF5C4B328E09FB300C07B96 /* SearchBarViewCell.swift */; };
 		ABF5C4B628E3B86C00C07B96 /* RequestImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF5C4B528E3B86C00C07B96 /* RequestImageService.swift */; };
-		ABF5C4BC28E4E62900C07B96 /* Imagefiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF5C4BB28E4E62900C07B96 /* Imagefiable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,8 +62,8 @@
 		ABF057CA28D888AC00CF132F /* BestSellerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestSellerService.swift; sourceTree = "<group>"; };
 		ABF057CC28D8B4FB00CF132F /* BestSellerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestSellerViewCell.swift; sourceTree = "<group>"; };
 		ABF057CE28D9217D00CF132F /* NSAttributedString+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+.swift"; sourceTree = "<group>"; };
+		ABF5C4B328E09FB300C07B96 /* SearchBarViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarViewCell.swift; sourceTree = "<group>"; };
 		ABF5C4B528E3B86C00C07B96 /* RequestImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestImageService.swift; sourceTree = "<group>"; };
-		ABF5C4BB28E4E62900C07B96 /* Imagefiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Imagefiable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +83,7 @@
 				AB5B8D9628C77991005AA82B /* SelectCategoryViewCell.swift */,
 				5C836AEA28B2BF5600C7B7F1 /* HotSalesViewCell.swift */,
 				ABF057CC28D8B4FB00CF132F /* BestSellerViewCell.swift */,
+				ABF5C4B328E09FB300C07B96 /* SearchBarViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -94,7 +95,6 @@
 				ABB3D95628C678C4006014A9 /* Identifiable.swift */,
 				AB07C25728D39606004419EB /* UICollectionView+.swift */,
 				ABF057CE28D9217D00CF132F /* NSAttributedString+.swift */,
-				ABF5C4BB28E4E62900C07B96 /* Imagefiable.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -293,6 +293,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABF5C4B428E09FB300C07B96 /* SearchBarViewCell.swift in Sources */,
 				AB62EEDE28CA1013009EB555 /* HomeStoreImageRequest.swift in Sources */,
 				AB62EEE028CA11FB009EB555 /* Request.swift in Sources */,
 				ABF5C4B628E3B86C00C07B96 /* RequestImageService.swift in Sources */,
@@ -311,7 +312,6 @@
 				ABF057CD28D8B4FB00CF132F /* BestSellerViewCell.swift in Sources */,
 				5CBF9ACE28B1424900BBBA24 /* AppDelegate.swift in Sources */,
 				5C836AF128B2E0C000C7B7F1 /* UIColor+extension.swift in Sources */,
-				ABF5C4BC28E4E62900C07B96 /* Imagefiable.swift in Sources */,
 				ABF057C528D87C5400CF132F /* BestSellerCellViewModel.swift in Sources */,
 				AB5B8D9728C77991005AA82B /* SelectCategoryViewCell.swift in Sources */,
 				5CBF9AD028B1424900BBBA24 /* SceneDelegate.swift in Sources */,
