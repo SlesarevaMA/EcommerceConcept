@@ -12,7 +12,7 @@ private enum Metrics {
         static let interitemSpacing: CGFloat = 12
         static let backgroundColor: UIColor = .init(hex: 0xE5E5E5)
     }
-    
+
     enum SelectCategory {
         static let height: CGFloat = 93
         static let horizontalEdgeInsets: CGFloat = 11.5
@@ -29,16 +29,23 @@ private enum Metrics {
         static let verticalEdgeInsets: CGFloat = 6
         static let horizontalEdgeInsets: CGFloat = 7
     }
+    
+    enum SearchBar {
+        static let height: CGFloat = 34
+        static let leadingEdgeInsets: CGFloat = 32
+        static let trailingEdgeInsets: CGFloat = 37
+    }
 }
 
 private enum Section: Int, CaseIterable {
     case selectCategory
+    case searchBar
     case hotSales
     case bestSeller
 }
 
 final class MainViewController: UIViewController {
-    
+                
     private lazy var collectionView: UICollectionView = {
         UICollectionView(frame: .zero, collectionViewLayout: createLayout())
     }()
@@ -89,6 +96,7 @@ final class MainViewController: UIViewController {
         collectionView.backgroundColor = Metrics.CollectionView.backgroundColor
         collectionView.dataSource = self
         collectionView.register(cell: SelectCategoryViewCell.self)
+        collectionView.register(cell: SearchBarViewCell.self)
         collectionView.register(cell: HotSalesViewCell.self)
         collectionView.register(cell: BestSellerViewCell.self)
     }
@@ -126,10 +134,12 @@ final class MainViewController: UIViewController {
         layoutEnvironment: NSCollectionLayoutEnvironment
     ) -> NSCollectionLayoutSection? {
         switch section {
-        case .hotSales:
-            return hotSalesSection()
         case .selectCategory:
             return selectCategorySection()
+        case .searchBar:
+            return searchBarSection()
+        case .hotSales:
+            return hotSalesSection()
         case .bestSeller:
             return bestSellerSection()
         }
@@ -161,6 +171,30 @@ final class MainViewController: UIViewController {
         return section
     }
     
+    private func searchBarSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+        let layoutSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(Metrics.SearchBar.height)
+        )
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])
+        group.contentInsets = NSDirectionalEdgeInsets(
+            top: 0,
+            leading: Metrics.SearchBar.leadingEdgeInsets,
+            bottom: 0,
+            trailing: Metrics.SearchBar.trailingEdgeInsets
+        )
+
+        let section = NSCollectionLayoutSection(group: group)
+
+        return section
+    }
+    
     private func hotSalesSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
@@ -185,7 +219,7 @@ final class MainViewController: UIViewController {
         
         return section
     }
-    
+            
     private func bestSellerSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
@@ -291,6 +325,8 @@ extension MainViewController: UICollectionViewDataSource {
             return selectCategoryCells.count
         case .bestSeller:
             return bestSellerCells.count
+        case .searchBar:
+            return 1
         }
     }
     
@@ -330,6 +366,9 @@ extension MainViewController: UICollectionViewDataSource {
             }
 
             cell.configure(with: model)
+			return cell
+        case .searchBar:
+            let cell: SearchBarViewCell = collectionView.dequeueReusableCell(for: indexPath)
             return cell
         }
     }

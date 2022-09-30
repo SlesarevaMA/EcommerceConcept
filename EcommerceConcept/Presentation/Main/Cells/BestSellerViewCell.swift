@@ -40,7 +40,7 @@ private enum Metrics {
     }
 }
 
-final class BestSellerViewCell: UICollectionViewCell, Identifiable, Imagefiable {
+final class BestSellerViewCell: UICollectionViewCell, Identifiable {
     
     private(set) var imageUrl: URL?
     
