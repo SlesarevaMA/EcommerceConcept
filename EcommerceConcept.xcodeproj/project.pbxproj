@@ -26,6 +26,13 @@
 		AB62EEDE28CA1013009EB555 /* HomeStoreImageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB62EEDD28CA1013009EB555 /* HomeStoreImageRequest.swift */; };
 		AB62EEE028CA11FB009EB555 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB62EEDF28CA11FB009EB555 /* Request.swift */; };
 		ABB3D95728C678C4006014A9 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB3D95628C678C4006014A9 /* Identifiable.swift */; };
+		ABF057C528D87C5400CF132F /* BestSellerCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF057C428D87C5400CF132F /* BestSellerCellViewModel.swift */; };
+		ABF057C728D882D700CF132F /* BestSeller.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF057C628D882D700CF132F /* BestSeller.swift */; };
+		ABF057CB28D888AC00CF132F /* BestSellerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF057CA28D888AC00CF132F /* BestSellerService.swift */; };
+		ABF057CD28D8B4FB00CF132F /* BestSellerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF057CC28D8B4FB00CF132F /* BestSellerViewCell.swift */; };
+		ABF057CF28D9217D00CF132F /* NSAttributedString+.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF057CE28D9217D00CF132F /* NSAttributedString+.swift */; };
+		ABF5C4B628E3B86C00C07B96 /* RequestImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF5C4B528E3B86C00C07B96 /* RequestImageService.swift */; };
+		ABF5C4BC28E4E62900C07B96 /* Imagefiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF5C4BB28E4E62900C07B96 /* Imagefiable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +57,13 @@
 		AB62EEDD28CA1013009EB555 /* HomeStoreImageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeStoreImageRequest.swift; sourceTree = "<group>"; };
 		AB62EEDF28CA11FB009EB555 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		ABB3D95628C678C4006014A9 /* Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
+		ABF057C428D87C5400CF132F /* BestSellerCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestSellerCellViewModel.swift; sourceTree = "<group>"; };
+		ABF057C628D882D700CF132F /* BestSeller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestSeller.swift; sourceTree = "<group>"; };
+		ABF057CA28D888AC00CF132F /* BestSellerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestSellerService.swift; sourceTree = "<group>"; };
+		ABF057CC28D8B4FB00CF132F /* BestSellerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestSellerViewCell.swift; sourceTree = "<group>"; };
+		ABF057CE28D9217D00CF132F /* NSAttributedString+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+.swift"; sourceTree = "<group>"; };
+		ABF5C4B528E3B86C00C07B96 /* RequestImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestImageService.swift; sourceTree = "<group>"; };
+		ABF5C4BB28E4E62900C07B96 /* Imagefiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Imagefiable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +82,7 @@
 			children = (
 				AB5B8D9628C77991005AA82B /* SelectCategoryViewCell.swift */,
 				5C836AEA28B2BF5600C7B7F1 /* HotSalesViewCell.swift */,
+				ABF057CC28D8B4FB00CF132F /* BestSellerViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -78,6 +93,8 @@
 				5C836AF028B2E0C000C7B7F1 /* UIColor+extension.swift */,
 				ABB3D95628C678C4006014A9 /* Identifiable.swift */,
 				AB07C25728D39606004419EB /* UICollectionView+.swift */,
+				ABF057CE28D9217D00CF132F /* NSAttributedString+.swift */,
+				ABF5C4BB28E4E62900C07B96 /* Imagefiable.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -95,6 +112,8 @@
 			isa = PBXGroup;
 			children = (
 				5C9140FD28B3B46200FB9240 /* HotSalesService.swift */,
+				ABF057CA28D888AC00CF132F /* BestSellerService.swift */,
+				ABF5C4B528E3B86C00C07B96 /* RequestImageService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -111,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				5C91410B28B3CAF000FB9240 /* HotSales.swift */,
+				ABF057C628D882D700CF132F /* BestSeller.swift */,
 			);
 			path = ApiModel;
 			sourceTree = "<group>";
@@ -178,6 +198,7 @@
 			children = (
 				AB62EEDB28CA08F7009EB555 /* SelectCategoryCellViewModel.swift */,
 				5C836AED28B2C05B00C7B7F1 /* HotSalesCellViewModel.swift */,
+				ABF057C428D87C5400CF132F /* BestSellerCellViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -274,17 +295,24 @@
 			files = (
 				AB62EEDE28CA1013009EB555 /* HomeStoreImageRequest.swift in Sources */,
 				AB62EEE028CA11FB009EB555 /* Request.swift in Sources */,
+				ABF5C4B628E3B86C00C07B96 /* RequestImageService.swift in Sources */,
 				AB62EEDC28CA08F7009EB555 /* SelectCategoryCellViewModel.swift in Sources */,
+				ABF057CF28D9217D00CF132F /* NSAttributedString+.swift in Sources */,
 				5C91410628B3C21B00FB9240 /* NetworkManager.swift in Sources */,
+				ABF057CB28D888AC00CF132F /* BestSellerService.swift in Sources */,
 				ABB3D95728C678C4006014A9 /* Identifiable.swift in Sources */,
 				5C836AEE28B2C05B00C7B7F1 /* HotSalesCellViewModel.swift in Sources */,
+				ABF057C728D882D700CF132F /* BestSeller.swift in Sources */,
 				AB07C25828D39606004419EB /* UICollectionView+.swift in Sources */,
 				5C91410C28B3CAF000FB9240 /* HotSales.swift in Sources */,
 				5C9140FE28B3B46200FB9240 /* HotSalesService.swift in Sources */,
 				5C91410028B3BA3100FB9240 /* HomeStoreRequest.swift in Sources */,
 				5CBF9AD228B1424900BBBA24 /* MainViewController.swift in Sources */,
+				ABF057CD28D8B4FB00CF132F /* BestSellerViewCell.swift in Sources */,
 				5CBF9ACE28B1424900BBBA24 /* AppDelegate.swift in Sources */,
 				5C836AF128B2E0C000C7B7F1 /* UIColor+extension.swift in Sources */,
+				ABF5C4BC28E4E62900C07B96 /* Imagefiable.swift in Sources */,
+				ABF057C528D87C5400CF132F /* BestSellerCellViewModel.swift in Sources */,
 				AB5B8D9728C77991005AA82B /* SelectCategoryViewCell.swift in Sources */,
 				5CBF9AD028B1424900BBBA24 /* SceneDelegate.swift in Sources */,
 				5C91410928B3CA0E00FB9240 /* Decoder.swift in Sources */,

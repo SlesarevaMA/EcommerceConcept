@@ -8,45 +8,54 @@
 import UIKit
 
 private enum Metrics {
+    enum CollectionView {
+        static let interitemSpacing: CGFloat = 12
+        static let backgroundColor: UIColor = .init(hex: 0xE5E5E5)
+    }
+    
     enum SelectCategory {
-        static let width: CGFloat = 71
         static let height: CGFloat = 93
         static let horizontalEdgeInsets: CGFloat = 11.5
     }
     
-    enum CollectionView {
-        static let interitemSpacing: CGFloat = 12
-        
-        static let backgroundColor: UIColor = .init(hex: 0xE5E5E5)
-    }
-    
     enum HotSales {
         static let height: CGFloat = 182
+        static let leadinghorizontalEdgeInsets: CGFloat = 15
+        static let trailinghorizontalEdgeInsets: CGFloat = 21
+    }
+    
+    enum BestSeller {
+        static let height: CGFloat = 227
+        static let verticalEdgeInsets: CGFloat = 6
+        static let horizontalEdgeInsets: CGFloat = 7
     }
 }
 
 private enum Section: Int, CaseIterable {
     case selectCategory
     case hotSales
+    case bestSeller
 }
 
 final class MainViewController: UIViewController {
-    
-    private var hotsalesImagesStore = [URL: UIImage]()
-    
-    private let hotSalesService = HotSalesServiceImpl()
     
     private lazy var collectionView: UICollectionView = {
         UICollectionView(frame: .zero, collectionViewLayout: createLayout())
     }()
     
-    private var hotSalesCells = [HotSalesCellViewModel]()
+    private var imageStore = [URL: UIImage]()
     
+    private let hotSalesService = HotSalesServiceImpl()
+    private let bestSellerService = BestSellerServiceImpl()
+    private let requestImageService = RequestImageServiceImpl()
+    
+    private var hotSalesCells = [HotSalesCellViewModel]()
+    private var bestSellerCells = [BestSellerCellViewModel]()
     private var selectCategoryCells = [
         SelectCategoryCellViewModel(image: UIImage(named: "Phones"), category: "Phones"),
         SelectCategoryCellViewModel(image: UIImage(named: "Computer"), category: "Computer"),
         SelectCategoryCellViewModel(image: UIImage(named: "Health"), category: "Health"),
-        SelectCategoryCellViewModel(image: UIImage(named: "Books"), category: "Books"),
+        SelectCategoryCellViewModel(image: UIImage(named: "Books"), category: "Books")
     ]
     
     override func viewDidLoad() {
@@ -78,10 +87,10 @@ final class MainViewController: UIViewController {
     
     private func prepareCollectionView() {
         collectionView.backgroundColor = Metrics.CollectionView.backgroundColor
-
         collectionView.dataSource = self
-        collectionView.register(cell: HotSalesViewCell.self)
         collectionView.register(cell: SelectCategoryViewCell.self)
+        collectionView.register(cell: HotSalesViewCell.self)
+        collectionView.register(cell: BestSellerViewCell.self)
     }
     
     private func createLayout() -> UICollectionViewLayout {
@@ -121,26 +130,9 @@ final class MainViewController: UIViewController {
             return hotSalesSection()
         case .selectCategory:
             return selectCategorySection()
+        case .bestSeller:
+            return bestSellerSection()
         }
-    }
-    
-    private func hotSalesSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .fractionalHeight(1)
-        )
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let layoutSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .absolute(Metrics.HotSales.height)
-        )
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .groupPaging
-        
-        return section
     }
     
     private func selectCategorySection() -> NSCollectionLayoutSection {
@@ -156,23 +148,85 @@ final class MainViewController: UIViewController {
         )
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])
-        group.contentInsets = NSDirectionalEdgeInsets(top: 0,
-                                                      leading: Metrics.SelectCategory.horizontalEdgeInsets,
-                                                      bottom: 0,
-                                                      trailing: Metrics.SelectCategory.horizontalEdgeInsets)
+        group.contentInsets = NSDirectionalEdgeInsets(
+            top: 0,
+            leading: Metrics.SelectCategory.horizontalEdgeInsets,
+            bottom: 0,
+            trailing: Metrics.SelectCategory.horizontalEdgeInsets
+        )
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
         
         return section
     }
-
+    
+    private func hotSalesSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let layoutSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .absolute(Metrics.HotSales.height)
+        )
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitems: [item])
+        group.contentInsets = NSDirectionalEdgeInsets(
+            top: 0,
+            leading: Metrics.HotSales.leadinghorizontalEdgeInsets,
+            bottom: 0,
+            trailing: Metrics.HotSales.trailinghorizontalEdgeInsets
+        )
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .groupPaging
+        
+        return section
+    }
+    
+    private func bestSellerSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = NSDirectionalEdgeInsets(
+            top: Metrics.BestSeller.verticalEdgeInsets,
+            leading: Metrics.BestSeller.horizontalEdgeInsets,
+            bottom: Metrics.BestSeller.verticalEdgeInsets,
+            trailing: Metrics.BestSeller.horizontalEdgeInsets
+        )
+        
+        let layoutSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .absolute(Metrics.BestSeller.height)
+        )
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitem: item, count: 2)
+        let section = NSCollectionLayoutSection(group: group)
+        
+        return section
+    }
+    
     private func requestItems() {
         hotSalesService.requestInfo { result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let results):
                     self.hotSalesCells = results.map(self.mapHotSalesViewModel)
+                    self.collectionView.reloadData()
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        }
+        
+        bestSellerService.requestInfo { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let results):
+                    self.bestSellerCells = results.map(self.mapBestSellerViewModel)
                     self.collectionView.reloadData()
                 case .failure(let error):
                     print(error)
@@ -190,23 +244,29 @@ final class MainViewController: UIViewController {
         )
     }
     
-    private func addProductImage(for cell: HotSalesViewCell, with url: URL) {
-        if let image = hotsalesImagesStore[url] {
-            cell.addProductImage(image: image)
+    private func mapBestSellerViewModel(from apiModel: BestSeller) -> BestSellerCellViewModel {
+        return BestSellerCellViewModel(
+            brand: apiModel.title,
+            price: apiModel.priceWithoutDiscount,
+            discountPrice: apiModel.discountPrice,
+            imageUrl: apiModel.picture
+        )
+    }
+
+    private func requestImage(with url: URL, completion: @escaping (UIImage?) -> Void) {
+        if let image = imageStore[url] {
+            completion(image)
         } else {
-            hotSalesService.requestImage(at: url) { [weak self] result in
+            requestImageService.requestImage(at: url) { [weak self] result in
                 DispatchQueue.main.async {
-                    guard cell.imageUrl == url else {
-                        return
-                    }
-                    
                     switch result {
                     case .success(let imageData):
                         let image = UIImage(data: imageData)
-                        self?.hotsalesImagesStore[url] = image
-                        cell.addProductImage(image: image)
+                        self?.imageStore[url] = image
+                        completion(image)
                     case .failure(let error):
                         print(error)
+                        completion(nil)
                     }
                 }
             }
@@ -229,10 +289,15 @@ extension MainViewController: UICollectionViewDataSource {
             return hotSalesCells.count
         case .selectCategory:
             return selectCategoryCells.count
+        case .bestSeller:
+            return bestSellerCells.count
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
         guard let section = Section(rawValue: indexPath.section) else {
             assertionFailure("Wrong section \(indexPath.section)")
             return UICollectionViewCell()
@@ -242,13 +307,28 @@ extension MainViewController: UICollectionViewDataSource {
         case .hotSales:
             let cell: HotSalesViewCell = collectionView.dequeueReusableCell(for: indexPath)
             let model = hotSalesCells[indexPath.item]
-            addProductImage(for: cell, with: model.imageUrl)
+            
+            requestImage(with: model.imageUrl) { image in
+                cell.addProductImage(image: image)
+            }
+            
             cell.configure(with: model)
             return cell
-
+            
         case .selectCategory:
             let cell: SelectCategoryViewCell = collectionView.dequeueReusableCell(for: indexPath)
             let model = selectCategoryCells[indexPath.item]
+            cell.configure(with: model)
+            return cell
+            
+        case .bestSeller:
+            let cell: BestSellerViewCell = collectionView.dequeueReusableCell(for: indexPath)
+            let model = bestSellerCells[indexPath.item]
+            
+            requestImage(with: model.imageUrl) { image in
+                cell.addProductImage(image: image)
+            }
+
             cell.configure(with: model)
             return cell
         }

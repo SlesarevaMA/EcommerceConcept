@@ -5,7 +5,7 @@
 //  Created by Margarita Slesareva on 21.08.2022.
 //
 
-import UIKit
+import Foundation
 
 struct HotSalesCellViewModel {
     let imageUrl: URL
