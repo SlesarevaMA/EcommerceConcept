@@ -62,7 +62,6 @@ final class SelectCategoryViewCell: UICollectionViewCell, Identifiable {
         }
         
         NSLayoutConstraint.activate([
-            categoryButton.widthAnchor.constraint(equalToConstant: Metrics.categoryButtonWidth),
             categoryButton.widthAnchor.constraint(equalTo: categoryButton.heightAnchor),
             categoryButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             categoryButton.topAnchor.constraint(equalTo: contentView.topAnchor),
