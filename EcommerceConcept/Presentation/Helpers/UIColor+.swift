@@ -1,5 +1,5 @@
 //
-//  UIColor+extension.swift
+//  UIColor+.swift
 //  EcommerceConcept
 //
 //  Created by Margarita Slesareva on 22.08.2022.
