@@ -37,34 +37,18 @@ private enum Metrics {
     }
 }
 
-private enum Section: Int, CaseIterable {
-    case selectCategory
-    case searchBar
-    case hotSales
-    case bestSeller
-}
-
 final class MainViewController: UIViewController {
                 
     private lazy var collectionView: UICollectionView = {
         UICollectionView(frame: .zero, collectionViewLayout: createLayout())
     }()
     
-    private var imageStore = [URL: UIImage]()
+    private lazy var dataSource = MainViewControllerDataSource(delegate: self)
     
     private let hotSalesService = HotSalesServiceImpl()
     private let bestSellerService = BestSellerServiceImpl()
     private let requestImageService = RequestImageServiceImpl()
-    
-    private var hotSalesCells = [HotSalesCellViewModel]()
-    private var bestSellerCells = [BestSellerCellViewModel]()
-    private var selectCategoryCells = [
-        SelectCategoryCellViewModel(image: UIImage(named: "Phones"), category: "Phones"),
-        SelectCategoryCellViewModel(image: UIImage(named: "Computer"), category: "Computer"),
-        SelectCategoryCellViewModel(image: UIImage(named: "Health"), category: "Health"),
-        SelectCategoryCellViewModel(image: UIImage(named: "Books"), category: "Books")
-    ]
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -94,7 +78,7 @@ final class MainViewController: UIViewController {
     
     private func prepareCollectionView() {
         collectionView.backgroundColor = Metrics.CollectionView.backgroundColor
-        collectionView.dataSource = self
+        collectionView.dataSource = dataSource
         collectionView.register(cell: SelectCategoryViewCell.self)
         collectionView.register(cell: SearchBarViewCell.self)
         collectionView.register(cell: HotSalesViewCell.self)
@@ -248,7 +232,7 @@ final class MainViewController: UIViewController {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let results):
-                    self.hotSalesCells = results.map(self.mapHotSalesViewModel)
+                    self.dataSource.hotSalesCells = results.map(self.mapHotSalesViewModel)
                     self.collectionView.reloadData()
                 case .failure(let error):
                     print(error)
@@ -260,7 +244,7 @@ final class MainViewController: UIViewController {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let results):
-                    self.bestSellerCells = results.map(self.mapBestSellerViewModel)
+                    self.dataSource.bestSellerCells = results.map(self.mapBestSellerViewModel)
                     self.collectionView.reloadData()
                 case .failure(let error):
                     print(error)
@@ -286,90 +270,10 @@ final class MainViewController: UIViewController {
             imageUrl: apiModel.picture
         )
     }
-
-    private func requestImage(with url: URL, completion: @escaping (UIImage?) -> Void) {
-        if let image = imageStore[url] {
-            completion(image)
-        } else {
-            requestImageService.requestImage(at: url) { [weak self] result in
-                DispatchQueue.main.async {
-                    switch result {
-                    case .success(let imageData):
-                        let image = UIImage(data: imageData)
-                        self?.imageStore[url] = image
-                        completion(image)
-                    case .failure(let error):
-                        print(error)
-                        completion(nil)
-                    }
-                }
-            }
-        }
-    }
 }
 
-extension MainViewController: UICollectionViewDataSource {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return Section.allCases.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let section = Section(rawValue: section) else {
-            return 0
-        }
-        
-        switch section {
-        case .hotSales:
-            return hotSalesCells.count
-        case .selectCategory:
-            return selectCategoryCells.count
-        case .bestSeller:
-            return bestSellerCells.count
-        case .searchBar:
-            return 1
-        }
-    }
-    
-    func collectionView(
-        _ collectionView: UICollectionView,
-        cellForItemAt indexPath: IndexPath
-    ) -> UICollectionViewCell {
-        guard let section = Section(rawValue: indexPath.section) else {
-            assertionFailure("Wrong section \(indexPath.section)")
-            return UICollectionViewCell()
-        }
-        
-        switch section {
-        case .hotSales:
-            let cell: HotSalesViewCell = collectionView.dequeueReusableCell(for: indexPath)
-            let model = hotSalesCells[indexPath.item]
-            
-            requestImage(with: model.imageUrl) { image in
-                cell.addProductImage(image: image)
-            }
-            
-            cell.configure(with: model)
-            return cell
-            
-        case .selectCategory:
-            let cell: SelectCategoryViewCell = collectionView.dequeueReusableCell(for: indexPath)
-            let model = selectCategoryCells[indexPath.item]
-            cell.configure(with: model)
-            return cell
-            
-        case .bestSeller:
-            let cell: BestSellerViewCell = collectionView.dequeueReusableCell(for: indexPath)
-            let model = bestSellerCells[indexPath.item]
-            
-            requestImage(with: model.imageUrl) { image in
-                cell.addProductImage(image: image)
-            }
-
-            cell.configure(with: model)
-			return cell
-        case .searchBar:
-            let cell: SearchBarViewCell = collectionView.dequeueReusableCell(for: indexPath)
-            return cell
-        }
+extension MainViewController: MainViewControllerDataSourceDelegate {
+    func requestImage(with url: URL, completion: @escaping (Result<Data, Error>) -> Void) {
+        requestImageService.requestImage(at: url, completion: completion)
     }
 }

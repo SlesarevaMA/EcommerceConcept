@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		5C836AEB28B2BF5600C7B7F1 /* HotSalesViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C836AEA28B2BF5600C7B7F1 /* HotSalesViewCell.swift */; };
 		5C836AEE28B2C05B00C7B7F1 /* HotSalesCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C836AED28B2C05B00C7B7F1 /* HotSalesCellViewModel.swift */; };
-		5C836AF128B2E0C000C7B7F1 /* UIColor+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C836AF028B2E0C000C7B7F1 /* UIColor+extension.swift */; };
+		5C836AF128B2E0C000C7B7F1 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C836AF028B2E0C000C7B7F1 /* UIColor+.swift */; };
 		5C9140FE28B3B46200FB9240 /* HotSalesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9140FD28B3B46200FB9240 /* HotSalesService.swift */; };
 		5C91410028B3BA3100FB9240 /* HomeStoreRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9140FF28B3BA3100FB9240 /* HomeStoreRequest.swift */; };
 		5C91410628B3C21B00FB9240 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C91410528B3C21B00FB9240 /* NetworkManager.swift */; };
@@ -25,6 +25,9 @@
 		AB62EEDC28CA08F7009EB555 /* SelectCategoryCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB62EEDB28CA08F7009EB555 /* SelectCategoryCellViewModel.swift */; };
 		AB62EEDE28CA1013009EB555 /* HomeStoreImageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB62EEDD28CA1013009EB555 /* HomeStoreImageRequest.swift */; };
 		AB62EEE028CA11FB009EB555 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB62EEDF28CA11FB009EB555 /* Request.swift */; };
+		AB771D8728E7425700ED4F83 /* MainViewControllerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB771D8628E7425700ED4F83 /* MainViewControllerDataSource.swift */; };
+		AB771D8D28E8890600ED4F83 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB771D8C28E8890600ED4F83 /* Section.swift */; };
+		AB83518628E9AD2700FD1F25 /* MainViewControllerDataSourceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB83518528E9AD2700FD1F25 /* MainViewControllerDataSourceDelegate.swift */; };
 		ABB3D95728C678C4006014A9 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB3D95628C678C4006014A9 /* Identifiable.swift */; };
 		ABF057C528D87C5400CF132F /* BestSellerCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF057C428D87C5400CF132F /* BestSellerCellViewModel.swift */; };
 		ABF057C728D882D700CF132F /* BestSeller.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF057C628D882D700CF132F /* BestSeller.swift */; };
@@ -38,7 +41,7 @@
 /* Begin PBXFileReference section */
 		5C836AEA28B2BF5600C7B7F1 /* HotSalesViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotSalesViewCell.swift; sourceTree = "<group>"; };
 		5C836AED28B2C05B00C7B7F1 /* HotSalesCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotSalesCellViewModel.swift; sourceTree = "<group>"; };
-		5C836AF028B2E0C000C7B7F1 /* UIColor+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+extension.swift"; sourceTree = "<group>"; };
+		5C836AF028B2E0C000C7B7F1 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		5C9140FD28B3B46200FB9240 /* HotSalesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotSalesService.swift; sourceTree = "<group>"; };
 		5C9140FF28B3BA3100FB9240 /* HomeStoreRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeStoreRequest.swift; sourceTree = "<group>"; };
 		5C91410528B3C21B00FB9240 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -56,6 +59,9 @@
 		AB62EEDB28CA08F7009EB555 /* SelectCategoryCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCategoryCellViewModel.swift; sourceTree = "<group>"; };
 		AB62EEDD28CA1013009EB555 /* HomeStoreImageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeStoreImageRequest.swift; sourceTree = "<group>"; };
 		AB62EEDF28CA11FB009EB555 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		AB771D8628E7425700ED4F83 /* MainViewControllerDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewControllerDataSource.swift; sourceTree = "<group>"; };
+		AB771D8C28E8890600ED4F83 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
+		AB83518528E9AD2700FD1F25 /* MainViewControllerDataSourceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewControllerDataSourceDelegate.swift; sourceTree = "<group>"; };
 		ABB3D95628C678C4006014A9 /* Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
 		ABF057C428D87C5400CF132F /* BestSellerCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestSellerCellViewModel.swift; sourceTree = "<group>"; };
 		ABF057C628D882D700CF132F /* BestSeller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestSeller.swift; sourceTree = "<group>"; };
@@ -91,7 +97,7 @@
 		5C836AEF28B2E08900C7B7F1 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				5C836AF028B2E0C000C7B7F1 /* UIColor+extension.swift */,
+				5C836AF028B2E0C000C7B7F1 /* UIColor+.swift */,
 				ABB3D95628C678C4006014A9 /* Identifiable.swift */,
 				AB07C25728D39606004419EB /* UICollectionView+.swift */,
 				ABF057CE28D9217D00CF132F /* NSAttributedString+.swift */,
@@ -187,8 +193,11 @@
 			isa = PBXGroup;
 			children = (
 				5CBF9AD128B1424900BBBA24 /* MainViewController.swift */,
+				AB771D8628E7425700ED4F83 /* MainViewControllerDataSource.swift */,
+				AB83518528E9AD2700FD1F25 /* MainViewControllerDataSourceDelegate.swift */,
 				AB62EED928C79083009EB555 /* ViewModels */,
 				5C836AEC28B2BF5E00C7B7F1 /* Cells */,
+				AB771D8C28E8890600ED4F83 /* Section.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -296,22 +305,25 @@
 				ABF5C4B428E09FB300C07B96 /* SearchBarViewCell.swift in Sources */,
 				AB62EEDE28CA1013009EB555 /* HomeStoreImageRequest.swift in Sources */,
 				AB62EEE028CA11FB009EB555 /* Request.swift in Sources */,
+				AB771D8728E7425700ED4F83 /* MainViewControllerDataSource.swift in Sources */,
 				ABF5C4B628E3B86C00C07B96 /* RequestImageService.swift in Sources */,
 				AB62EEDC28CA08F7009EB555 /* SelectCategoryCellViewModel.swift in Sources */,
 				ABF057CF28D9217D00CF132F /* NSAttributedString+.swift in Sources */,
 				5C91410628B3C21B00FB9240 /* NetworkManager.swift in Sources */,
 				ABF057CB28D888AC00CF132F /* BestSellerService.swift in Sources */,
+				AB771D8D28E8890600ED4F83 /* Section.swift in Sources */,
 				ABB3D95728C678C4006014A9 /* Identifiable.swift in Sources */,
 				5C836AEE28B2C05B00C7B7F1 /* HotSalesCellViewModel.swift in Sources */,
 				ABF057C728D882D700CF132F /* BestSeller.swift in Sources */,
 				AB07C25828D39606004419EB /* UICollectionView+.swift in Sources */,
 				5C91410C28B3CAF000FB9240 /* HotSales.swift in Sources */,
+				AB83518628E9AD2700FD1F25 /* MainViewControllerDataSourceDelegate.swift in Sources */,
 				5C9140FE28B3B46200FB9240 /* HotSalesService.swift in Sources */,
 				5C91410028B3BA3100FB9240 /* HomeStoreRequest.swift in Sources */,
 				5CBF9AD228B1424900BBBA24 /* MainViewController.swift in Sources */,
 				ABF057CD28D8B4FB00CF132F /* BestSellerViewCell.swift in Sources */,
 				5CBF9ACE28B1424900BBBA24 /* AppDelegate.swift in Sources */,
-				5C836AF128B2E0C000C7B7F1 /* UIColor+extension.swift in Sources */,
+				5C836AF128B2E0C000C7B7F1 /* UIColor+.swift in Sources */,
 				ABF057C528D87C5400CF132F /* BestSellerCellViewModel.swift in Sources */,
 				AB5B8D9728C77991005AA82B /* SelectCategoryViewCell.swift in Sources */,
 				5CBF9AD028B1424900BBBA24 /* SceneDelegate.swift in Sources */,
