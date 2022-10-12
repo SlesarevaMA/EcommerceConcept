@@ -13,7 +13,11 @@ protocol RequestImageService {
 
 final class RequestImageServiceImpl: RequestImageService {
     
-    private let networkManager = NetworkManagerImpl()
+    private let networkManager: NetworkManager
+    
+    init(networkManager: NetworkManager) {
+        self.networkManager = networkManager
+    }
     
     func requestImage(at url: URL, completion: @escaping (Result<Data, Error>) -> Void) {
         let imageRequest = HomeStoreImageRequest(url: url)

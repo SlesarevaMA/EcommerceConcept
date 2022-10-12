@@ -106,13 +106,10 @@ final class BestSellerViewCell: UICollectionViewCell, Identifiable {
     }
     
     private func addConstraints() {
-        [productImageView, priceLabel, discountPriceLabel, brandLabel].forEach {
+        [productImageView, favouriteButton, priceLabel, discountPriceLabel, brandLabel].forEach {
             contentView.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
-        
-        productImageView.addSubview(favouriteButton)
-        favouriteButton.translatesAutoresizingMaskIntoConstraints = false
         
         layer.cornerRadius = Metrics.Size.cornerRadius
         
