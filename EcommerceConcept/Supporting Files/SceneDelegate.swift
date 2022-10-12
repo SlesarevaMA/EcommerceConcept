@@ -10,6 +10,8 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    
+    private let presentationAssemlby = PresenationAssemblyImpl()
 
     func scene(
         _ scene: UIScene,
@@ -21,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
         let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = MainViewController()
+        window.rootViewController = presentationAssemlby.mainScreen()
         window.makeKeyAndVisible()
         
         self.window = window

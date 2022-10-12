@@ -37,18 +37,19 @@ private enum Metrics {
     }
 }
 
-final class MainViewController: UIViewController {
+protocol MainView: AnyObject {
+    func reload(_ section: Section)
+    func setCollectionViewDataSource(dataSourse: UICollectionViewDataSource)
+}
+
+final class MainViewController: UIViewController, MainView {
+    
+    var presenter: MainPresenter?
                 
     private lazy var collectionView: UICollectionView = {
         UICollectionView(frame: .zero, collectionViewLayout: createLayout())
     }()
     
-    private lazy var dataSource = MainViewControllerDataSource(delegate: self)
-    
-    private let hotSalesService = HotSalesServiceImpl()
-    private let bestSellerService = BestSellerServiceImpl()
-    private let requestImageService = RequestImageServiceImpl()
-        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -59,7 +60,18 @@ final class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        requestItems()
+        presenter?.viewDidLoad()
+    }
+    
+    // MARK: MainView
+    
+    func reload(_ section: Section) {
+        let indexSet = IndexSet(integer: section.rawValue)
+        collectionView.reloadSections(indexSet)
+    }
+    
+    func setCollectionViewDataSource(dataSourse: UICollectionViewDataSource) {
+        collectionView.dataSource = dataSourse
     }
     
     private func addSubviews() {
@@ -78,7 +90,6 @@ final class MainViewController: UIViewController {
     
     private func prepareCollectionView() {
         collectionView.backgroundColor = Metrics.CollectionView.backgroundColor
-        collectionView.dataSource = dataSource
         collectionView.register(cell: SelectCategoryViewCell.self)
         collectionView.register(cell: SearchBarViewCell.self)
         collectionView.register(cell: HotSalesViewCell.self)
@@ -225,55 +236,5 @@ final class MainViewController: UIViewController {
         let section = NSCollectionLayoutSection(group: group)
         
         return section
-    }
-    
-    private func requestItems() {
-        hotSalesService.requestInfo { result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let results):
-                    self.dataSource.hotSalesCells = results.map(self.mapHotSalesViewModel)
-                    self.collectionView.reloadData()
-                case .failure(let error):
-                    print(error)
-                }
-            }
-        }
-        
-        bestSellerService.requestInfo { result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let results):
-                    self.dataSource.bestSellerCells = results.map(self.mapBestSellerViewModel)
-                    self.collectionView.reloadData()
-                case .failure(let error):
-                    print(error)
-                }
-            }
-        }
-    }
-    
-    private func mapHotSalesViewModel(from apiModel: HotSales) -> HotSalesCellViewModel {
-        return HotSalesCellViewModel(
-            imageUrl: apiModel.picture,
-            isNewLabelVisible: apiModel.isNew,
-            brand: apiModel.title,
-            description: apiModel.subtitle
-        )
-    }
-    
-    private func mapBestSellerViewModel(from apiModel: BestSeller) -> BestSellerCellViewModel {
-        return BestSellerCellViewModel(
-            brand: apiModel.title,
-            price: apiModel.priceWithoutDiscount,
-            discountPrice: apiModel.discountPrice,
-            imageUrl: apiModel.picture
-        )
-    }
-}
-
-extension MainViewController: MainViewControllerDataSourceDelegate {
-    func requestImage(with url: URL, completion: @escaping (Result<Data, Error>) -> Void) {
-        requestImageService.requestImage(at: url, completion: completion)
     }
 }

@@ -1,5 +1,5 @@
 //
-//  MainViewControllerDataSource.swift
+//  MainPresenterDataSource.swift
 //  EcommerceConcept
 //
 //  Created by Margarita Slesareva on 30.09.2022.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-final class MainViewControllerDataSource: NSObject, UICollectionViewDataSource {
+final class MainPresenterDataSource: NSObject, UICollectionViewDataSource {
     
-    weak var delegate: MainViewControllerDataSourceDelegate?
+    weak var delegate: MainDataSourceDelegate?
     
     private var imageStore = [URL: UIImage]()
     
@@ -21,11 +21,7 @@ final class MainViewControllerDataSource: NSObject, UICollectionViewDataSource {
     ]
     var hotSalesCells = [HotSalesCellViewModel]()
     var bestSellerCells = [BestSellerCellViewModel]()
-    
-    init(delegate: MainViewController) {
-        self.delegate = delegate
-    }
-    
+        
     private func requestImage(with url: URL, completion: @escaping (UIImage?) -> Void) {
         if let image = self.imageStore[url] {
             completion(image)
@@ -80,6 +76,7 @@ final class MainViewControllerDataSource: NSObject, UICollectionViewDataSource {
             let cell: SelectCategoryViewCell = collectionView.dequeueReusableCell(for: indexPath)
             let model = selectCategoryCells[indexPath.item]
             cell.configure(with: model)
+            
             return cell
             
         case .hotSales:

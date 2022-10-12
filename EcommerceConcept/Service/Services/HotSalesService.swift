@@ -5,14 +5,21 @@
 //  Created by Margarita Slesareva on 22.08.2022.
 //
 
+import Foundation
+
 protocol HotSalesService {
     func requestInfo(completion: @escaping (Result<[HotSales], Error>) -> Void)
 }
 
 final class HotSalesServiceImpl: HotSalesService {
    
-    private let networkManager = NetworkManagerImpl()
-    private let decoder = HomeStoreJSONDecoder()
+    private let networkManager: NetworkManager
+    private let decoder: JSONDecoder
+    
+    init(networkManager: NetworkManager, decoder: JSONDecoder) {
+        self.networkManager = networkManager
+        self.decoder = decoder
+    }
     
     func requestInfo(completion: @escaping (Result<[HotSales], Error>) -> Void) {
         let dataRequest = HomeStoreRequest()
